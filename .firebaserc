@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "myclubs-prod-4fa34"
+    "default": "myclubs-prod-4fa34",
+    "myclubs-dev": "myclubs-dev-769d7"
   }
 }
