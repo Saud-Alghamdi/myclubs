@@ -20,6 +20,6 @@ jobs:
     - name: Install Firebase Tools
       run: npm install -g firebase-tools
     - name: Deploy to Firebase
-      run: firebase deploy --only hosting:myclubs-dev
+      run: firebase deploy --only hosting --project myclubs-dev-769d7
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
