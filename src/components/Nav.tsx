@@ -33,7 +33,7 @@ export default function Nav() {
             <a href="">Sign up</a>
           </li>
           <li>
-            <a href="">Log in</a>
+            <a href="">Login</a>
           </li>
         </ul>
       </div>
