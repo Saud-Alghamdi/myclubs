@@ -22,4 +22,4 @@ jobs:
     - name: Deploy to Firebase
       run: firebase deploy --only hosting:myclubs-dev --project myclubs-dev-769d7
       env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}thi

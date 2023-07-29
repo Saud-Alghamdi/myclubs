@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./views/Home";
-import Register from "./views/Register";
-import Login from "./views/Login";
-import MyClubs from "./views/MyClubs";
-import MyMatches from "./views/MyMatches";
+import Home from "./Views/Home";
+import Register from "./Views/Register";
+import Login from "./Views/Login";
+import MyClubs from "./Views/MyClubs";
+import MyMatches from "./Views/MyMatches";
 
 export default function App() {
   return (
