@@ -5,7 +5,7 @@ import Login from "./views/Login";
 import MyClubs from "./views/MyClubs";
 import MyMatches from "./views/MyMatches";
 
-function App() {
+export default function App() {
   return (
     <Router>
       <Routes>
@@ -33,5 +33,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;
