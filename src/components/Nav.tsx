@@ -51,7 +51,7 @@ export default function Nav() {
               <a href="">Home</a>
             </li>
             <li>
-              <a href="">My Clubs</a>
+              <a href="">My Clubz</a>
             </li>
             <li>
               <a href="">My Matches</a>
