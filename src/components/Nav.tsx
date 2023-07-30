@@ -1,44 +1,41 @@
 import { useState } from "react";
 import logo from "../assets/logo-icon.png";
 import HamburgerIcon from "../assets/HamburgerIcon.tsx";
+import { Link } from "react-router-dom";
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <nav className="bg-gray-950 h-fit flex text-gray-200 flex-wrap justify-between sm:justify-normal">
+    <nav className="flex h-fit flex-wrap justify-between bg-gray-950 text-gray-200 sm:justify-normal">
       {/* Flex Child 1 */}
-      <div className="flex items-center justify-start w-1/2 sm:w-fit">
-        <a href="">
-          <img
-            src={logo}
-            alt=""
-            className="h-12"
-          />
-        </a>
+      <div className="flex w-1/2 items-center justify-start sm:w-fit">
+        <Link to="/">
+          <img src={logo} alt="" className="h-12" />
+        </Link>
       </div>
       {/* Flex Child 2 */}
-      <div className="hidden sm:block grow">
-        <ul className="flex items-center justify-center h-full gap-x-10">
+      <div className="hidden grow sm:block">
+        <ul className="flex h-full items-center justify-center gap-x-10">
           <li>
-            <a href="">Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li>
-            <a href="">My Clubs</a>
+            <Link to="/myclubs">My Clubs</Link>
           </li>
           <li>
-            <a href="">My Matches</a>
+            <Link to="/mymatches">My Matches</Link>
           </li>
           <li>
-            <a href="">Sign up</a>
+            <Link to="/register">Sign up</Link>
           </li>
           <li>
-            <a href="">Login</a>
+            <Link to="/login">Login</Link>
           </li>
         </ul>
       </div>
       {/* Flex Child 3 */}
-      <div className="flex justify-end items-center sm:hidden w-1/2 sm:w-fit">
+      <div className="flex w-1/2 items-center justify-end sm:hidden sm:w-fit">
         <button onClick={() => (isOpen ? setIsOpen(false) : setIsOpen(true))}>
           <HamburgerIcon twStyles="h-8 fill-gray-200" />
         </button>
@@ -46,21 +43,21 @@ export default function Nav() {
       {/* Flex Child 4 */}
       {isOpen && (
         <div className="block sm:hidden">
-          <ul className="flex flex-col items-start justify-center h-full">
+          <ul className="flex h-full flex-col items-start justify-center">
             <li>
-              <a href="">Home</a>
+              <Link to="/home">Home</Link>
             </li>
             <li>
-              <a href="">My Clubz</a>
+              <Link to="/myclubs">My Clubs</Link>
             </li>
             <li>
-              <a href="">My Matchez</a>
+              <Link to="/mymatches">My Matches</Link>
             </li>
             <li>
-              <a href="">Sign up</a>
+              <Link to="/register">Sign up</Link>
             </li>
             <li>
-              <a href="">Log in</a>
+              <Link to="/login">Log in</Link>
             </li>
           </ul>
         </div>
