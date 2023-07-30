@@ -16,7 +16,7 @@ export default function Hero() {
           We let you customize your football experience to match your
           preferences. Choose your favorite clubs and receive tailored updates,
           match schedules, and results just for you. Say goodbye to endless
-          searching and hello to personalized football updates
+          searching and hello to personalized football updates.
         </p>
       </div>
     </section>
