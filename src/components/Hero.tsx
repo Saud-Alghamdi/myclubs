@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="background-radial-gradient relative mb-40 h-screen overflow-hidden bg-center text-gray-200">
+    <section className="background-radial-gradient relative h-screen overflow-hidden bg-center text-gray-200">
       <img
         className="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.4]"
         src="/src/assets/hero-bg.jpg"
