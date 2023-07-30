@@ -1,41 +1,22 @@
 export default function Hero() {
   return (
-    <div
-      className="background-radial-gradient mb-40 overflow-hidden"
-      style={{
-        backgroundColor: "hsl(218, 41%, 15%)",
-        backgroundImage: `radial-gradient(650px circle at 0% 0%, hsl(218, 41%, 35%) 15%, hsl(218, 41%, 30%) 35%, hsl(218, 41%, 20%) 75%, hsl(218, 41%, 19%) 80%, transparent 100%),
-          radial-gradient(1250px circle at 100% 100%, hsl(218, 41%, 45%) 15%, hsl(218, 41%, 30%) 35%, hsl(218, 41%, 20%) 75%, hsl(218, 41%, 19%) 80%, transparent 100%)`,
-      }}
-    >
-      <div className="h-full px-6 py-12 text-center md:px-12 lg:py-24 lg:text-left">
-        <div className="w-100 mx-auto text-neutral-800 sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <div
-              className="mt-12 lg:mt-0"
-              style={{ zIndex: 10 }}
-            >
-              <h1 className="mt-0 mb-12 text-5xl font-bold tracking-tight md:text-6xl xl:text-7xl text-[hsl(218,81%,95%)]">
-                The best offer <br />
-                <span className="text-[hsl(218,81%,75%)]">for your business</span>
-              </h1>
-              <p className="opacity-70 text-[hsl(218,81%,85%)]">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus, expedita iusto veniam atque, magni tempora mollitia dolorum consequatur nulla, neque debitis eos reprehenderit quasi ab ipsum nisi dolorem modi. Quos?
-              </p>
-            </div>
-            <div className="relative mb-12 lg:mb-0">
-              <div
-                id="radius-shape-1"
-                className="absolute rounded-full shadow-lg"
-              />
-              <div
-                id="radius-shape-2"
-                className="absolute shadow-lg"
-              />
-            </div>
-          </div>
-        </div>
+    <section className="background-radial-gradient relative mb-40 h-screen overflow-hidden bg-center text-gray-200">
+      <img
+        className="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.4]"
+        src="/src/assets/hero-bg.jpg"
+        alt=""
+      />
+      <div className="mx-auto mt-32 w-10/12 sm:max-w-[500px] lg:max-w-[700px]">
+        <h1 className="text-4xl lg:text-6xl font-bold">
+          Stay Connected <br /> To Your Favorite Clubs!
+        </h1>
+        <p className="mt-8 lg:mt-10 lg:text-lg">
+          We let you customize your football experience to match your
+          preferences. Choose your favorite clubs and receive tailored updates,
+          match schedules, and results just for you. Say goodbye to endless
+          searching and hello to personalized football updates
+        </p>
       </div>
-    </div>
+    </section>
   );
 }
