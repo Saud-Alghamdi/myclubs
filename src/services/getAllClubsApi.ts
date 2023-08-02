@@ -17,6 +17,18 @@ const LEAGUE_NAMES = [
   "Ligue 1",
 ];
 
+export interface ClubInfo {
+  team: {
+    id: number;
+    name: string;
+    logo: string;
+  };
+}
+
+interface Leagues {
+  [key: string]: ClubInfo[];
+}
+
 export async function getAllClubs() {
   const requests = LEAGUE_IDS.map((leagueId) => {
     const options = {
@@ -36,17 +48,11 @@ export async function getAllClubs() {
 
   try {
     const responses = await Promise.all(requests);
-    let leagues = {};
+    const leagues: Leagues = {};
 
     responses.forEach((response: AxiosResponse, index) => {
       const leagueName = LEAGUE_NAMES[index];
-      const teams = response.data.response;
-
-      let clubs = teams.map((team) => {
-        const { name, logo } = team.team;
-        return { clubName: name, logo };
-      });
-
+      const clubs = response.data.response;
       leagues[leagueName] = clubs;
     });
 
@@ -54,5 +60,6 @@ export async function getAllClubs() {
     return leagues;
   } catch (error) {
     console.error(error);
+    return {};
   }
 }
