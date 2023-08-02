@@ -7,8 +7,8 @@ export default function AllClubs() {
   useEffect(() => {
     const fetchClubs = async () => {
       try {
-        const data = await getAllClubs();
-        const allClubs = Object.values(data).flat();
+        const clubsData = await getAllClubs();
+        const allClubs = Object.values(clubsData).flat() as ClubInfo[];
         setClubsData(allClubs);
       } catch (error) {
         console.error(error);

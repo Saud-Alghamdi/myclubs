@@ -30,6 +30,13 @@ interface Leagues {
 }
 
 export async function getAllClubs() {
+  // Check if clubs data is cached first
+  const cachedData = localStorage.getItem("clubsData");
+  if (cachedData) {
+    console.log("Data received from localstorage");
+    return JSON.parse(cachedData);
+  }
+
   const requests = LEAGUE_IDS.map((leagueId) => {
     const options = {
       method: "GET",
@@ -55,6 +62,8 @@ export async function getAllClubs() {
       const clubs = response.data.response;
       leagues[leagueName] = clubs;
     });
+
+    localStorage.setItem("clubsData", JSON.stringify(leagues));
 
     console.log(leagues);
     return leagues;
