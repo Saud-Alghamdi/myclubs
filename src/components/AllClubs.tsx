@@ -1,28 +1,22 @@
-import { useEffect, useState } from "react";
-import { getAllClubs, ClubInfo } from "../services/getAllClubsApi";
+import { useAllClubs } from "../services/getAllClubsApi";
+import { Club } from "../types/customTypes";
 
 export default function AllClubs() {
-  const [clubsData, setClubsData] = useState<ClubInfo[]>([]);
+  const { data: leaguesData, isError, isLoading } = useAllClubs();
 
-  useEffect(() => {
-    const fetchClubs = async () => {
-      try {
-        const clubsData = await getAllClubs();
-        const allClubs = Object.values(clubsData).flat() as ClubInfo[];
-        setClubsData(allClubs);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  if (isLoading || !leaguesData) {
+    return <div>Loading...</div>;
+  }
 
-    fetchClubs();
-  }, []);
+  if (isError) {
+    return <div>Error occurred while fetching clubs.</div>;
+  }
 
   return (
     <div id="content-wrapper" className="m-5">
       <h3 className="text-2xl font-bold">All Clubs:</h3>
       <div className="grid grid-cols-3 gap-4 p-4">
-        {clubsData.map((club) => (
+        {(Object.values(leaguesData) as Club[][]).flat().map((club: Club) => (
           <div
             key={club.team.id}
             className="flex flex-col items-center justify-center"

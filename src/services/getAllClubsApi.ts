@@ -1,12 +1,12 @@
-/* This API fetches all football clubs in season 2023 in these Leagues:
-France League, Germany League, Brazil League, England League, Saudi League, Spain League, Italy League. */
+import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
+import { Leagues } from "../types/customTypes";
 
 const API_KEY = import.meta.env.VITE_RAPID_API_KEY;
 const API_HOST = import.meta.env.VITE_RAPID_API_HOST;
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const TEAMS_ENDPOINT = "/teams";
-const LEAGUE_IDS = [39, 135, 71, 307, 140, 79, 61]; // Respect Order --> England, Italy, Brazil, Saudi, Spain, Germany, France
+const LEAGUE_IDS = [39, 135, 71, 307, 140, 79, 61];
 const LEAGUE_NAMES = [
   "Premier League",
   "Serie A",
@@ -17,26 +17,7 @@ const LEAGUE_NAMES = [
   "Ligue 1",
 ];
 
-export interface ClubInfo {
-  team: {
-    id: number;
-    name: string;
-    logo: string;
-  };
-}
-
-interface Leagues {
-  [key: string]: ClubInfo[];
-}
-
-export async function getAllClubs() {
-  // Check if clubs data is cached first
-  const cachedData = localStorage.getItem("clubsData");
-  if (cachedData) {
-    console.log("Data received from localstorage");
-    return JSON.parse(cachedData);
-  }
-
+async function fetchAllClubs() {
   const requests = LEAGUE_IDS.map((leagueId) => {
     const options = {
       method: "GET",
@@ -53,22 +34,43 @@ export async function getAllClubs() {
     return axios.request(options);
   });
 
-  try {
-    const responses = await Promise.all(requests);
-    const leagues: Leagues = {};
+  const responses = await Promise.all(requests);
+  const leagues: Leagues = {};
 
-    responses.forEach((response: AxiosResponse, index) => {
-      const leagueName = LEAGUE_NAMES[index];
-      const clubs = response.data.response;
-      leagues[leagueName] = clubs;
-    });
+  responses.forEach((response: AxiosResponse, index) => {
+    const leagueName = LEAGUE_NAMES[index];
+    const clubs = response.data.response;
+    leagues[leagueName] = clubs;
+  });
 
-    localStorage.setItem("clubsData", JSON.stringify(leagues));
+  return leagues;
+}
 
-    console.log(leagues);
-    return leagues;
-  } catch (error) {
-    console.error(error);
-    return {};
+export function useAllClubs() {
+  let clubsData = localStorage.getItem("clubsData");
+
+  // Parse the data from localstorage before using it
+  if (clubsData) {
+    clubsData = JSON.parse(clubsData);
   }
+
+  const {
+    data: queryData,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useQuery(["clubsData"], fetchAllClubs, {
+    onError: (error) => {
+      console.error(error);
+    },
+    onSuccess: (data) => {
+      localStorage.setItem("clubsData", JSON.stringify(data));
+    },
+    enabled: !clubsData, // only run the query if there's no data in local storage
+  });
+
+  // No need to parse here anymore since we've parsed above
+  const data = clubsData || queryData;
+
+  return { data, isLoading, isError, isSuccess };
 }
