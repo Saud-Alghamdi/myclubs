@@ -34,9 +34,18 @@ const fetchClubs = async (): Promise<Club[]> => {
   const promises = LEAGUE_IDS.map(fetchClubsForLeague);
   const clubsArrays = await Promise.all(promises);
 
-  return clubsArrays.flat();
+  // flat() squashes the arrays into one single array
+  const clubsData = clubsArrays.flat();
+  localStorage.setItem("clubsData", JSON.stringify(clubsData))
+  return clubsData;
 };
 
 export const useClubs = () => {
-  return useQuery<Club[], Error>(["clubs"], fetchClubs);
+  const localData = localStorage.getItem("clubsData");
+  const parsedLocalData = localData ? JSON.parse(localData) : null;
+
+  return useQuery<Club[], Error>(["clubs"], fetchClubs, {
+    enabled: !parsedLocalData,
+    initialData: parsedLocalData
+  });
 };
