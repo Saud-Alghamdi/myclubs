@@ -1,25 +1,33 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
   const authContext = useAuth();
   if (!authContext) {
     throw new Error("useAuth is used outside of the AuthProvider");
   }
-  const { user, error, login } = authContext;
+
+  const { login, error } = authContext;
   const navigate = useNavigate();
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const loggedInUser = await login(email, password);
-    if (loggedInUser) {
-      navigate("/mymatches");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (emailRef.current && passwordRef.current) {
+      const isLoginSuccess = await login(
+        emailRef.current.value,
+        passwordRef.current.value,
+      );
+      if (isLoginSuccess) {
+        navigate("/mymatches");
+      }
     }
   };
-  
+
   return (
     <div className="mx-auto mt-10 flex flex-col items-center justify-center px-6 py-8 lg:py-0">
       <a
@@ -44,7 +52,7 @@ export default function LoginForm() {
                 id="email"
                 className="  block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
                 placeholder="name@company.com"
-                onChange={(e) => setEmail(e.target.value)}
+                ref={emailRef}
               />
             </div>
             <div>
@@ -60,7 +68,7 @@ export default function LoginForm() {
                 id="password"
                 placeholder="••••••••"
                 className="  block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
-                onChange={(e) => setPassword(e.target.value)}
+                ref={passwordRef}
               />
             </div>
             <div className="flex items-center justify-between">

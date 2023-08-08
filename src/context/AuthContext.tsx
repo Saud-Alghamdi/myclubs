@@ -1,38 +1,20 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import app from "../firebase/firebase";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { createContext } from "react";
+import { User, AuthProviderProps, AuthContextType } from "../types/customTypes";
 
 // ----- Create Context ----- //
-
-type User = {
-  username: string | null;
-  email: string | null;
-};
-
-type AuthContextType = {
-  user: User | null;
-  error: string | null;
-  login: (email: string, password: string) => Promise<void>;
-};
-
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined,
-);
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 // ----- Create Context Provider ----- //
-
-type AuthProviderProps = {
-  children: React.ReactNode;
-};
-
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const auth = getAuth(app);
 
-  async function login(email: string, password: string) {
+  async function login(email: string, password: string): Promise<boolean> {
     // Reset error state at the beginning of a new login attempt
     setError(null);
     try {
@@ -47,6 +29,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           email: userCredential.user.email,
         };
         setUser(loggedInUserInfo);
+        return true;
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -55,6 +38,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setError("An unknown error occurred.");
       }
     }
+    return false;
   }
 
   return (

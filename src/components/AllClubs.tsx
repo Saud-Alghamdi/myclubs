@@ -1,4 +1,4 @@
-import { useClubs } from "../services/useClubs";
+import { useClubs } from "../hooks/useClubs";
 import { Club } from "../types/customTypes";
 
 export default function AllClubs() {

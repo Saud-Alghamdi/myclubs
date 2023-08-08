@@ -14,7 +14,7 @@ export default function Nav() {
           <img src={logo} alt="" className="h-12" />
         </Link>
       </div>
-      {/* Flex Child 2 */}
+      {/* Flex Child 2 - Nav in bigger screens */}
       <div className="hidden grow sm:block">
         <ul className="flex h-full items-center justify-center gap-x-10">
           <li>
@@ -40,12 +40,12 @@ export default function Nav() {
           <HamburgerIcon twStyles="h-8 fill-gray-200" />
         </button>
       </div>
-      {/* Flex Child 4 */}
+      {/* Flex Child 4 - Nav in smaller screens  */}
       {isOpen && (
         <div className="block sm:hidden">
           <ul className="flex h-full flex-col items-start justify-center">
             <li>
-              <Link to="/home">Home</Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
               <Link to="/myclubs">My Clubs</Link>
