@@ -7,6 +7,7 @@ export type AuthContextType = {
   user: User | null;
   error: string | null;
   login: (email: string, password: string) => Promise<boolean>;
+  signup: (email: string, password: string) => Promise<boolean>;
 };
 
 export type AuthProviderProps = {

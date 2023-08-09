@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 export default function Home() {
   return (
-    <div className="home-view">
+    <div className="home-page">
       <Nav />
       <Hero />
       <Features />

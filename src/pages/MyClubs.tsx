@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 export default function MyClubs() {
   return (
-    <div className="myclubs-view">
+    <div className="myclubs-page">
       <Nav />
       <Clubs />
       <Footer />

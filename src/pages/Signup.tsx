@@ -1,12 +1,12 @@
 import Nav from "../components/Nav";
+import SignupForm from "../components/SignupForm";
 import Footer from "../components/Footer";
-import LoginForm from "../components/LoginForm";
 
-export default function Login() {
+export default function Signup() {
   return (
-    <div className="login-page">
+    <div className="signup-page">
       <Nav />
-      <LoginForm />
+      <SignupForm />
       <Footer />
     </div>
   );

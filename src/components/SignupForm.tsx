@@ -2,28 +2,29 @@ import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
-export default function LoginForm() {
+export default function SignupForm() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const repeatPasswordRef = useRef<HTMLInputElement>(null);
 
   const authContext = useAuth();
   if (!authContext) {
     throw new Error("useAuth is used outside of the AuthProvider");
   }
 
-  const { login, error } = authContext;
+  const { signup, error } = authContext;
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (emailRef.current && passwordRef.current) {
-      const isLoginSuccess = await login(
+      const isSignupSuccess = await signup(
         emailRef.current.value,
         passwordRef.current.value,
       );
-      if (isLoginSuccess) {
-        navigate("/mymatches");
+      if (isSignupSuccess) {
+        navigate("/login");
       }
     }
   };
@@ -34,7 +35,7 @@ export default function LoginForm() {
         href="#"
         className="mb-6 flex items-center text-4xl font-semibold text-gray-900 dark:text-white"
       >
-        Login
+        Sign up
       </a>
       <div className="w-full rounded-lg border border-blue-500 shadow sm:max-w-md md:mt-0 xl:p-0">
         <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
@@ -71,6 +72,22 @@ export default function LoginForm() {
                 ref={passwordRef}
               />
             </div>
+            <div>
+              <label
+                htmlFor="repeat-password"
+                className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Repeat Password:
+              </label>
+              <input
+                type="password"
+                name="repeat-password"
+                id="repeat-password"
+                placeholder="••••••••"
+                className="  block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                ref={repeatPasswordRef}
+              />
+            </div>
             <div className="flex items-center justify-between">
               <div className="flex items-start">
                 <div className="flex h-5 items-center">
@@ -99,7 +116,7 @@ export default function LoginForm() {
               type="submit"
               className="w-full rounded-lg bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
             >
-              Login
+              Sign up
             </button>
             <button className="mx-auto flex gap-2 rounded-lg border border-slate-200 px-4 py-2 text-slate-700 transition duration-150 hover:border-slate-400 hover:text-slate-900 hover:shadow">
               <img
@@ -110,12 +127,6 @@ export default function LoginForm() {
               />
               <span>Continue with Google</span>
             </button>
-            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-              Dont have an account yet?{" "}
-              <a href="/signup" className="font-medium hover:underline">
-                Sign up
-              </a>
-            </p>
           </form>
         </div>
       </div>

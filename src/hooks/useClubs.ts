@@ -6,7 +6,7 @@ const API_KEY = import.meta.env.VITE_RAPID_API_KEY;
 const API_HOST = import.meta.env.VITE_RAPID_API_HOST;
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const TEAMS_ENDPOINT = "/teams";
-const LEAGUE_IDS = [39, 135, 71, 307, 140, 79, 61];
+const LEAGUE_IDS = [39, 135, 71, 307, 140, 79, 61]; // Respect Order --> England, Italy, Brazil, Saudi, Spain, Germany, France
 
 const fetchClubs = async (): Promise<Club[]> => {
   const fetchClubsForLeague = async (leagueId: number): Promise<Club[]> => {
@@ -36,16 +36,16 @@ const fetchClubs = async (): Promise<Club[]> => {
 
   // flat() squashes the arrays into one single array
   const clubsData = clubsArrays.flat();
-  localStorage.setItem("clubsData", JSON.stringify(clubsData))
+  localStorage.setItem("clubsData", JSON.stringify(clubsData));
   return clubsData;
 };
 
 export const useClubs = () => {
   const localData = localStorage.getItem("clubsData");
-  const parsedLocalData = localData ? JSON.parse(localData) : null;
+  const parsedLocalStorageData = localData ? JSON.parse(localData) : null;
 
   return useQuery<Club[], Error>(["clubs"], fetchClubs, {
-    enabled: !parsedLocalData,
-    initialData: parsedLocalData
+    enabled: !parsedLocalStorageData,
+    initialData: parsedLocalStorageData,
   });
 };

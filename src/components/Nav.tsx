@@ -27,7 +27,7 @@ export default function Nav() {
             <Link to="/mymatches">My Matches</Link>
           </li>
           <li>
-            <Link to="/register">Sign up</Link>
+            <Link to="/signup">Sign up</Link>
           </li>
           <li>
             <Link to="/login">Login</Link>
@@ -54,7 +54,7 @@ export default function Nav() {
               <Link to="/mymatches">My Matches</Link>
             </li>
             <li>
-              <Link to="/register">Sign up</Link>
+              <Link to="/signup">Sign up</Link>
             </li>
             <li>
               <Link to="/login">Log in</Link>
