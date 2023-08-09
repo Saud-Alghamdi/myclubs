@@ -56,7 +56,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       );
       if (userCredential.user) {
         const signedupUserInfo = {
-          username: userCredential.user.displayName,
           email: userCredential.user.email,
         };
         setUser(signedupUserInfo);
