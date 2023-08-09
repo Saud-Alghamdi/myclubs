@@ -20,7 +20,7 @@ export type Club = {
   logo: string;
 };
 
-export type ClubResponse = {
+export type ClubApiResponse = {
   team: {
     id: number;
     name: string;

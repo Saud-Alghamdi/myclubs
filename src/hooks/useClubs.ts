@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Club, ClubResponse } from "../types/customTypes";
+import { Club, ClubApiResponse } from "../types/customTypes";
 
 const API_KEY = import.meta.env.VITE_RAPID_API_KEY;
 const API_HOST = import.meta.env.VITE_RAPID_API_HOST;
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const SEASON = "2023";
 const TEAMS_ENDPOINT = "/teams";
 const LEAGUE_IDS = [39, 135, 71, 307, 140, 79, 61]; // Respect Order --> England, Italy, Brazil, Saudi, Spain, Germany, France
 
@@ -15,7 +16,7 @@ const fetchClubs = async (): Promise<Club[]> => {
       url: `${BASE_URL}${TEAMS_ENDPOINT}`,
       params: {
         league: leagueId,
-        season: "2023",
+        season: SEASON,
       },
       headers: {
         "X-RapidAPI-Key": API_KEY,
@@ -23,8 +24,10 @@ const fetchClubs = async (): Promise<Club[]> => {
       },
     };
 
-    const response = await axios.request<{ response: ClubResponse[] }>(options);
-    return response.data.response.map((club: ClubResponse) => ({
+    const response = await axios.request<{ response: ClubApiResponse[] }>(
+      options,
+    );
+    return response.data.response.map((club: ClubApiResponse) => ({
       id: club.team.id,
       name: club.team.name,
       logo: club.team.logo,
