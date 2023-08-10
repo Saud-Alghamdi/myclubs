@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
@@ -6,13 +6,14 @@ export default function LoginForm() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
+  const navigate = useNavigate();
+
   const authContext = useAuth();
   if (!authContext) {
     throw new Error("useAuth is used outside of the AuthProvider");
   }
 
-  const { login, error } = authContext;
-  const navigate = useNavigate();
+  const { login, error, setError } = authContext;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +28,11 @@ export default function LoginForm() {
       }
     }
   };
+
+  // Reset error when component mounts
+  useEffect(() => {
+    setError(null);
+  }, [setError]);
 
   return (
     <div className="mx-auto mt-10 flex flex-col items-center justify-center px-6 py-8 lg:py-0">

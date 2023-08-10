@@ -35,9 +35,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUser(loggedInUserInfo);
         return true;
       }
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
       } else {
         setError("An unknown error occurred.");
       }
@@ -61,9 +61,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUser(signedupUserInfo);
         return true;
       }
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
       } else {
         setError("An unknown error occurred.");
       }
@@ -72,7 +72,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, error, login, signup }}>
+    <AuthContext.Provider value={{ user, error, setError, login, signup }}>
       {children}
     </AuthContext.Provider>
   );
