@@ -1,6 +1,6 @@
 import { useState } from "react";
 import logo from "../assets/logo-icon.png";
-import HamburgerIcon from "../assets/HamburgerIcon.tsx";
+import HamburgerIcon from "./HamburgerIcon.tsx";
 import { Link } from "react-router-dom";
 
 export default function Nav() {
@@ -37,7 +37,7 @@ export default function Nav() {
       {/* Flex Child 3 */}
       <div className="flex w-1/2 items-center justify-end sm:hidden sm:w-fit">
         <button onClick={() => (isOpen ? setIsOpen(false) : setIsOpen(true))}>
-          <HamburgerIcon twStyles="h-8 fill-gray-200" />
+          <HamburgerIcon tailwindwClasses="h-8 fill-gray-200" />
         </button>
       </div>
       {/* Flex Child 4 - Nav in smaller screens  */}

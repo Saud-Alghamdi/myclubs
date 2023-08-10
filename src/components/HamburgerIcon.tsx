@@ -1,11 +1,9 @@
-interface Props {
-  twStyles?: string;
-}
+import {TailwindProps} from "../types/customTypes"
 
-export default function HamburgerIcon({ twStyles }: Props) {
+export default function HamburgerIcon({ tailwindwClasses }: TailwindProps) {
   return (
     <svg
-      className={twStyles}
+      className={tailwindwClasses}
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
     >

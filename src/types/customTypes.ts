@@ -28,3 +28,7 @@ export type ClubApiResponse = {
     logo: string;
   };
 };
+
+export type TailwindProps = {
+  tailwindwClasses?: string;
+}
