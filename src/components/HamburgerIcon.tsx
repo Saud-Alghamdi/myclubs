@@ -1,9 +1,9 @@
-import {TailwindProps} from "../types/customTypes"
+import { TailwindProps } from "../types/customTypes";
 
-export default function HamburgerIcon({ tailwindwClasses }: TailwindProps) {
+export default function HamburgerIcon({ tailwindClasses }: TailwindProps) {
   return (
     <svg
-      className={tailwindwClasses}
+      className={tailwindClasses}
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
     >

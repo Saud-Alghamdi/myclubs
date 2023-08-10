@@ -30,5 +30,5 @@ export type ClubApiResponse = {
 };
 
 export type TailwindProps = {
-  tailwindwClasses?: string;
-}
+  tailwindClasses?: string;
+};

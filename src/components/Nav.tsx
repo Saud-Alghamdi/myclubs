@@ -37,7 +37,7 @@ export default function Nav() {
       {/* Flex Child 3 */}
       <div className="flex w-1/2 items-center justify-end sm:hidden sm:w-fit">
         <button onClick={() => (isOpen ? setIsOpen(false) : setIsOpen(true))}>
-          <HamburgerIcon tailwindwClasses="h-8 fill-gray-200" />
+          <HamburgerIcon tailwindClasses="h-8 fill-gray-200" />
         </button>
       </div>
       {/* Flex Child 4 - Nav in smaller screens  */}
