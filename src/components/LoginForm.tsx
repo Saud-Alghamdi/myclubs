@@ -15,14 +15,15 @@ export default function LoginForm() {
     throw new Error("useAuth is used outside of the AuthProvider");
   }
 
-  const { login, error, setError } = authContext;
+  const { loginWithEmailAndPassword, loginWithGoogle, error, setError } =
+    authContext;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     if (emailRef.current && passwordRef.current) {
-      const isLoginSuccess = await login(
+      const isLoginSuccess = await loginWithEmailAndPassword(
         emailRef.current.value,
         passwordRef.current.value,
       );
@@ -30,6 +31,18 @@ export default function LoginForm() {
       if (isLoginSuccess) {
         navigate("/mymatches");
       }
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setIsLoading(true);
+
+    const isGoogleLoginSuccess = await loginWithGoogle();
+
+    setIsLoading(false);
+
+    if (isGoogleLoginSuccess) {
+      navigate("/mymatches");
     }
   };
 
@@ -112,7 +125,11 @@ export default function LoginForm() {
             >
               Login
             </button>
-            <button className="mx-auto flex gap-2 rounded-lg border border-slate-200 px-4 py-2 text-slate-700 transition duration-150 hover:border-slate-400 hover:text-slate-900 hover:shadow">
+            <button
+              className="mx-auto flex gap-2 rounded-lg border border-slate-200 px-4 py-2 text-slate-700 transition duration-150 hover:border-slate-400 hover:text-slate-900 hover:shadow"
+              onClick={handleGoogleLogin}
+              type="button"
+            >
               <img
                 className="h-6 w-6"
                 src="https://www.svgrepo.com/show/475656/google-color.svg"

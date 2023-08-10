@@ -15,21 +15,34 @@ export default function SignupForm() {
     throw new Error("useAuth is used outside of the AuthProvider");
   }
 
-  const { signup, error, setError } = authContext;
+  const { signupWithEmailAndPassword, error, setError, loginWithGoogle } =
+    authContext;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     if (emailRef.current && passwordRef.current) {
-      const isSignupSuccess = await signup(
+      const isSignupSuccess = await signupWithEmailAndPassword(
         emailRef.current.value,
         passwordRef.current.value,
       );
       setIsLoading(false);
       if (isSignupSuccess) {
-        navigate("/login");
+        navigate("/mymatches");
       }
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setIsLoading(true);
+
+    const isGoogleLoginSuccess = await loginWithGoogle();
+
+    setIsLoading(false);
+
+    if (isGoogleLoginSuccess) {
+      navigate("/login");
     }
   };
 
@@ -112,7 +125,11 @@ export default function SignupForm() {
             >
               Sign up
             </button>
-            <button className="mx-auto flex gap-2 rounded-lg border border-slate-200 px-4 py-2 text-slate-700 transition duration-150 hover:border-slate-400 hover:text-slate-900 hover:shadow">
+            <button
+              className="mx-auto flex gap-2 rounded-lg border border-slate-200 px-4 py-2 text-slate-700 transition duration-150 hover:border-slate-400 hover:text-slate-900 hover:shadow"
+              type="button"
+              onClick={handleGoogleLogin}
+            >
               <img
                 className="h-6 w-6"
                 src="https://www.svgrepo.com/show/475656/google-color.svg"

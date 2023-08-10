@@ -7,8 +7,9 @@ export type AuthContextType = {
   user: User | null;
   error: string | null;
   setError: (error: string | null) => void;
-  login: (email: string, password: string) => Promise<boolean>;
-  signup: (email: string, password: string) => Promise<boolean>;
+  loginWithEmailAndPassword: (email: string, password: string) => Promise<boolean>;
+  signupWithEmailAndPassword: (email: string, password: string) => Promise<boolean>;
+  loginWithGoogle: () => Promise<boolean>;
 };
 
 export type AuthProviderProps = {

@@ -2,6 +2,8 @@ import { useState } from "react";
 import app from "../firebase/firebase";
 import {
   getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
@@ -18,7 +20,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const auth = getAuth(app);
 
-  async function login(email: string, password: string): Promise<boolean> {
+  async function loginWithEmailAndPassword(
+    email: string,
+    password: string,
+  ): Promise<boolean> {
     setError(null); // Reset error state at new login attempt
 
     try {
@@ -45,7 +50,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return false;
   }
 
-  async function signup(email: string, password: string): Promise<boolean> {
+  async function signupWithEmailAndPassword(
+    email: string,
+    password: string,
+  ): Promise<boolean> {
     setError(null); // Reset error state at new signup attempt
 
     try {
@@ -71,8 +79,42 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return false;
   }
 
+  async function loginWithGoogle(): Promise<boolean> {
+    setError(null); // Reset error state at new login attempt
+
+    try {
+      const provider = new GoogleAuthProvider();
+      const userCredential = await signInWithPopup(auth, provider);
+
+      if (userCredential.user) {
+        const loggedInUserInfo = {
+          username: userCredential.user.displayName,
+          email: userCredential.user.email,
+        };
+        setUser(loggedInUserInfo);
+        return true;
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred.");
+      }
+    }
+    return false;
+  }
+
   return (
-    <AuthContext.Provider value={{ user, error, setError, login, signup }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        error,
+        setError,
+        loginWithEmailAndPassword,
+        signupWithEmailAndPassword,
+        loginWithGoogle,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
