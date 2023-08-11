@@ -1,22 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import app from "../firebase/firebase";
 import {
+  User,
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { createContext } from "react";
-import { User, AuthProviderProps, AuthContextType } from "../types/customTypes";
+import { AuthProviderProps, AuthContextType } from "../types/customTypes";
 
 // ----- Create Context ----- //
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 // ----- Context Provider ----- //
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [currentUser, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const auth = getAuth(app);
 
@@ -33,11 +36,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       );
       if (userCredential.user) {
-        const loggedInUserInfo = {
-          username: userCredential.user.displayName,
-          email: userCredential.user.email,
-        };
-        setUser(loggedInUserInfo);
+        setUser(userCredential.user);
         return true;
       }
     } catch (err) {
@@ -63,10 +62,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       );
       if (userCredential.user) {
-        const signedupUserInfo = {
-          email: userCredential.user.email,
-        };
-        setUser(signedupUserInfo);
         return true;
       }
     } catch (err) {
@@ -87,11 +82,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const userCredential = await signInWithPopup(auth, provider);
 
       if (userCredential.user) {
-        const loggedInUserInfo = {
-          username: userCredential.user.displayName,
-          email: userCredential.user.email,
-        };
-        setUser(loggedInUserInfo);
+        setUser(userCredential.user);
         return true;
       }
     } catch (err) {
@@ -104,15 +95,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return false;
   }
 
+  // Add an effect to set the user state when the page loads
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
+
+    // Clean up the subscription on unmount
+    return unsubscribe;
+  }, [auth]);
+
   return (
     <AuthContext.Provider
       value={{
-        user,
+        currentUser,
         error,
         setError,
         loginWithEmailAndPassword,
         signupWithEmailAndPassword,
         loginWithGoogle,
+        loading,
       }}
     >
       {children}

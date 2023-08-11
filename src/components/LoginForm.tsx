@@ -8,12 +8,8 @@ export default function LoginForm() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const navigate = useNavigate();
-
   const authContext = useAuth();
-  if (!authContext) {
-    throw new Error("useAuth is used outside of the AuthProvider");
-  }
+  const navigate = useNavigate();
 
   const { loginWithEmailAndPassword, loginWithGoogle, error, setError } =
     authContext;

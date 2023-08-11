@@ -1,15 +1,19 @@
-export type User = {
-  username?: string | null;
-  email: string | null;
-};
+import { User } from "firebase/auth";
 
 export type AuthContextType = {
-  user: User | null;
+  currentUser: User | null;
   error: string | null;
   setError: (error: string | null) => void;
-  loginWithEmailAndPassword: (email: string, password: string) => Promise<boolean>;
-  signupWithEmailAndPassword: (email: string, password: string) => Promise<boolean>;
+  loginWithEmailAndPassword: (
+    email: string,
+    password: string,
+  ) => Promise<boolean>;
+  signupWithEmailAndPassword: (
+    email: string,
+    password: string,
+  ) => Promise<boolean>;
   loginWithGoogle: () => Promise<boolean>;
+  loading: boolean;
 };
 
 export type AuthProviderProps = {
