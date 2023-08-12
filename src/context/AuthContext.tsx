@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import { createContext } from "react";
 import { AuthProviderProps, AuthContextType } from "../types/customTypes";
@@ -95,6 +96,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return false;
   }
 
+  async function logout(): Promise<boolean> {
+    try {
+      await signOut(auth);
+      return true;
+    } catch (error) {
+      console.error("Failed to sign out:", error);
+      return false;
+    }
+  }
+
   // Add an effect to set the user state when the page loads
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -115,6 +126,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         loginWithEmailAndPassword,
         signupWithEmailAndPassword,
         loginWithGoogle,
+        logout,
         loading,
       }}
     >

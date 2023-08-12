@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import MyClubs from "./pages/MyClubs";
 import MyMatches from "./pages/MyMatches";
+import PrivateRoutes from "./components/PrivateRoutes";
 
 const queryClient = new QueryClient();
 
@@ -18,8 +19,10 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/myclubs" element={<MyClubs />} />
-            <Route path="/mymatches" element={<MyMatches />} />
+            <Route element={<PrivateRoutes />}>
+              <Route path="/myclubs" element={<MyClubs />} />
+              <Route path="/mymatches" element={<MyMatches />} />
+            </Route>
           </Routes>
         </Router>
       </AuthProvider>

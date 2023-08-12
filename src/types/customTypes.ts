@@ -13,6 +13,7 @@ export type AuthContextType = {
     password: string,
   ) => Promise<boolean>;
   loginWithGoogle: () => Promise<boolean>;
+  logout: () => Promise<boolean>;
   loading: boolean;
 };
 
