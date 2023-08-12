@@ -9,9 +9,11 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { createContext } from "react";
 import { AuthProviderProps, AuthContextType } from "../types/customTypes";
+import { getDisplayNameFromEmail } from "../helpers/helpers";
 
 // ----- Create Context ----- //
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -37,6 +39,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       );
       if (userCredential.user) {
+        if (!userCredential.user.displayName) {
+          const displayName = getDisplayNameFromEmail(email);
+          await updateProfile(userCredential.user, { displayName });
+        }
         setUser(userCredential.user);
         return true;
       }
@@ -63,6 +69,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       );
       if (userCredential.user) {
+        if (!userCredential.user.displayName) {
+          const displayName = getDisplayNameFromEmail(email);
+          await updateProfile(userCredential.user, { displayName });
+        }
+        setUser(userCredential.user);
         return true;
       }
     } catch (err) {
