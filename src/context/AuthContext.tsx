@@ -14,13 +14,14 @@ import {
 import { createContext } from "react";
 import { AuthProviderProps, AuthContextType } from "../types/customTypes";
 import { getDisplayNameFromEmail } from "../helpers/helpers";
+import Spinner from "../components/Spinner";
 
 // ----- Create Context ----- //
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 // ----- Context Provider ----- //
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [currentUser, setUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -31,6 +32,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     password: string,
   ): Promise<boolean> {
     setError(null); // Reset error state at new login attempt
+    setLoading(true); // Set loading state to true at the start of the operation
 
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -43,7 +45,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           const displayName = getDisplayNameFromEmail(email);
           await updateProfile(userCredential.user, { displayName });
         }
-        setUser(userCredential.user);
+        setCurrentUser(userCredential.user);
         return true;
       }
     } catch (err) {
@@ -52,6 +54,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       } else {
         setError("An unknown error occurred.");
       }
+    } finally {
+      setLoading(false);
     }
     return false;
   }
@@ -61,6 +65,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     password: string,
   ): Promise<boolean> {
     setError(null); // Reset error state at new signup attempt
+    setLoading(true); // Set loading state to true at the start of the operation
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -69,11 +74,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       );
       if (userCredential.user) {
-        if (!userCredential.user.displayName) {
-          const displayName = getDisplayNameFromEmail(email);
-          await updateProfile(userCredential.user, { displayName });
-        }
-        setUser(userCredential.user);
+        setCurrentUser(userCredential.user);
         return true;
       }
     } catch (err) {
@@ -82,19 +83,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
       } else {
         setError("An unknown error occurred.");
       }
+    } finally {
+      setLoading(false);
     }
     return false;
   }
 
   async function loginWithGoogle(): Promise<boolean> {
     setError(null); // Reset error state at new login attempt
+    setLoading(true); // Set loading state to true at the start of the operation
 
     try {
       const provider = new GoogleAuthProvider();
       const userCredential = await signInWithPopup(auth, provider);
 
       if (userCredential.user) {
-        setUser(userCredential.user);
+        setCurrentUser(userCredential.user);
         return true;
       }
     } catch (err) {
@@ -103,29 +107,41 @@ export function AuthProvider({ children }: AuthProviderProps) {
       } else {
         setError("An unknown error occurred.");
       }
+    } finally {
+      setLoading(false);
     }
     return false;
   }
 
   async function logout(): Promise<boolean> {
+    setLoading(true); // Set loading state to true at the start of the operation
     try {
       await signOut(auth);
       return true;
     } catch (error) {
       console.error("Failed to sign out:", error);
       return false;
+    } finally {
+      setLoading(false);
     }
   }
 
-  // Add an effect to set the user state when the page loads
+  /*
+  onAuthStateChanged() listens to firebase auth state changes in firebase's auth system, if a change happens, it runs a callback function that has a firebase user object as a parameter.
+  This useEffect checks the user state on these conditions:
+  1- on page refresh
+  2- when navigating to another route
+  3- when the auth state changes (a login happens, a signup happens, a logout happens)
+  */
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    const cleanup = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+
       setLoading(false);
     });
 
     // Clean up the subscription on unmount
-    return unsubscribe;
+    return cleanup;
   }, [auth]);
 
   return (
@@ -141,6 +157,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         loading,
       }}
     >
+      {loading && <Spinner />}
       {children}
     </AuthContext.Provider>
   );

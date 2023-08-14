@@ -1,10 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import Spinner from "./Spinner";
 
 export default function SignupForm() {
-  const [isLoading, setIsLoading] = useState(false);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -16,40 +14,32 @@ export default function SignupForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
     if (emailRef.current && passwordRef.current) {
       const isSignupSuccess = await signupWithEmailAndPassword(
         emailRef.current.value,
         passwordRef.current.value,
       );
-      setIsLoading(false);
       if (isSignupSuccess) {
-        navigate("/mymatches");
+        navigate("/");
       }
     }
   };
 
   const handleGoogleLogin = async () => {
-    setIsLoading(true);
-
     const isGoogleLoginSuccess = await loginWithGoogle();
 
-    setIsLoading(false);
-
     if (isGoogleLoginSuccess) {
-      navigate("/login");
+      navigate("/");
     }
   };
 
   useEffect(() => {
     setError(null);
-    setIsLoading(false);
   }, [setError]);
 
   return (
     <div className="mx-auto mt-10 flex flex-col items-center justify-center px-6 py-8 lg:py-0">
-      {isLoading && <Spinner />}
       <a
         href="#"
         className="mb-6 flex items-center text-4xl font-semibold text-gray-900 dark:text-white"

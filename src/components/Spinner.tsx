@@ -1,10 +1,11 @@
 export default function Spinner() {
   return (
-    <div className="absolute">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="absolute inset-0 bg-black opacity-50 backdrop-blur-md"></div>
       <div role="status">
         <svg
           aria-hidden="true"
-          className="mr-2 inline h-24 w-24 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
+          className="h-24 w-24 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

@@ -3,24 +3,18 @@ import logo from "../assets/logo-icon.png";
 import HamburgerIcon from "./HamburgerIcon";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import Spinner from "../components/Spinner";
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const authContext = useAuth();
-  const { logout } = authContext;
+  const { currentUser, logout } = useAuth();
 
   const handleLogout = async () => {
-    setIsLoading(true);
     await logout();
-    setIsLoading(false);
   };
 
   return (
     <nav className="flex h-fit flex-wrap justify-between bg-gray-950 text-gray-200 sm:justify-normal">
-      {isLoading && <Spinner />}
       {/* Flex Child 1 - Logo */}
       <div className="flex w-1/2 items-center justify-start sm:w-fit">
         <Link to="/">
@@ -39,14 +33,14 @@ export default function Nav() {
           <li>
             <Link to="/mymatches">My Matches</Link>
           </li>
-          {authContext?.currentUser ? (
+          {currentUser ? (
             <>
               <li>
                 <Link to="/" onClick={() => handleLogout()}>
                   Logout
                 </Link>
               </li>
-              <li>{authContext.currentUser.displayName}</li>
+              <li>{currentUser.displayName}</li>
             </>
           ) : (
             <>
@@ -79,12 +73,12 @@ export default function Nav() {
             <li>
               <Link to="/mymatches">My Matches</Link>
             </li>
-            {authContext?.currentUser ? (
+            {currentUser ? (
               <>
                 <li>
                   <Link to="/">Logout</Link>
                 </li>
-                <li>{authContext.currentUser.displayName}</li>
+                <li>{currentUser.displayName}</li>
               </>
             ) : (
               <>
