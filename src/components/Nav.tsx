@@ -14,9 +14,9 @@ export default function Nav() {
   };
 
   return (
-    <nav className="flex h-fit flex-wrap justify-between bg-gray-950 text-gray-200 sm:justify-normal">
+    <nav className="flex min-h-[64px] flex-wrap justify-between bg-gray-950 px-1 text-gray-200 sm:justify-normal">
       {/* Flex Child 1 - Logo */}
-      <div className="flex w-1/2 items-center justify-start sm:w-fit">
+      <div className="flex min-h-[64px] w-1/2 items-center justify-start sm:w-fit">
         <Link to="/">
           <img src={logo} alt="" className="h-12" />
         </Link>
@@ -55,7 +55,7 @@ export default function Nav() {
         </ul>
       </div>
       {/* Flex Child 3 - Hamburger Icon */}
-      <div className="flex w-1/2 items-center justify-end sm:hidden sm:w-fit">
+      <div className="flex min-h-[64px] w-1/2 items-center justify-end sm:hidden sm:w-fit">
         <button onClick={() => (isOpen ? setIsOpen(false) : setIsOpen(true))}>
           <HamburgerIcon tailwindClasses="h-8 fill-gray-200" />
         </button>
@@ -63,7 +63,7 @@ export default function Nav() {
       {/* Flex Child 4 - Nav links in smaller screens  */}
       {isOpen && (
         <div className="block sm:hidden">
-          <ul className="flex h-full flex-col items-start justify-center">
+          <ul className="flex h-full flex-col items-start justify-center gap-y-3 px-1 py-3">
             <li>
               <Link to="/">Home</Link>
             </li>
