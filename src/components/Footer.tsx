@@ -2,9 +2,9 @@ export default function Footer() {
   return (
     <>
       {/*Footer container*/}
-      <footer className="mt-20 bg-neutral-900 text-center text-white">
-        <div className="container px-6 pt-6">
-          <div className="mb-6 flex justify-center">
+      <footer className="mt-20 flex h-40 py-5 flex-col items-center justify-center bg-neutral-900 text-center text-white md:h-32 md:flex-row">
+        <div className="flex max-w-[600px] grow items-center justify-center">
+          <div className="flex items-center justify-center">
             <a
               href="#!"
               type="button"
@@ -108,13 +108,10 @@ export default function Footer() {
           </div>
         </div>
         {/*Copyright section*/}
-        <div
-          className="p-4 text-center"
-          style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
-        >
-          © 2023 Copyright:
+        <div className="flex max-w-[600px] grow items-center justify-center text-center">
+          © 2023 Copyright: &nbsp;
           <a className="text-whitehite" href="https://tailwind-elements.com/">
-            Tailwind Elements
+            Saud Alghamdi
           </a>
         </div>
       </footer>
