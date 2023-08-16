@@ -1,9 +1,11 @@
-import Clubs from "../components/Clubs";
+import AllClubs from "../components/AllClubs";
+import FavoriteClubs from "../components/FavoriteClubs";
 
 export default function MyClubs() {
   return (
     <div className="myclubs-page">
-      <Clubs />
+      <FavoriteClubs />
+      <AllClubs />
     </div>
   );
 }

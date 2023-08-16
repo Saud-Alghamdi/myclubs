@@ -27,7 +27,7 @@ export type Club = {
   logo: string;
 };
 
-export type ClubApiResponse = {
+export type ClubsApiResponse = {
   team: {
     id: number;
     name: string;
@@ -37,4 +37,10 @@ export type ClubApiResponse = {
 
 export type TailwindProps = {
   tailwindClasses?: string;
+};
+
+export type ClubsQuery = {
+  isSuccess: boolean;
+  msg: string;
+  data?: Club[];
 };

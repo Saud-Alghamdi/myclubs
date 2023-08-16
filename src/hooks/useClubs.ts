@@ -1,54 +1,52 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { Club, ClubApiResponse } from "../types/customTypes";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getAllClubs } from "../api/getAllClubs";
+import { getFavoriteClubs, addFavoriteClub } from "../services/clubServices";
+import { useAuth } from "./useAuth";
+import { Club, ClubsQuery } from "../types/customTypes";
 
-const API_KEY = import.meta.env.VITE_RAPID_API_KEY;
-const API_HOST = import.meta.env.VITE_RAPID_API_HOST;
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const SEASON = "2023";
-const TEAMS_ENDPOINT = "/teams";
-const LEAGUE_IDS = [39, 135, 71, 307, 140, 79, 61]; // Respect Order --> England, Italy, Brazil, Saudi, Spain, Germany, France
+export default function useClubs() {
+  const queryClient = useQueryClient();
+  const { currentUser } = useAuth();
+  const userId = currentUser!.uid;
 
-const fetchClubs = async (): Promise<Club[]> => {
-  const fetchClubsForLeague = async (leagueId: number): Promise<Club[]> => {
-    const options = {
-      method: "GET",
-      url: `${BASE_URL}${TEAMS_ENDPOINT}`,
-      params: {
-        league: leagueId,
-        season: SEASON,
+  // Fetch all clubs
+  const {
+    data: allClubs,
+    isLoading: allClubsLoading,
+    isSuccess: allClubsSuccess,
+    error: allClubsError,
+  } = useQuery<ClubsQuery, Error>(["allClubs"], getAllClubs);
+
+  // Fetch favorite clubs
+  const {
+    data: favoriteClubs,
+    isLoading: favoriteClubsLoading,
+    isSuccess: favoriteClubsSuccess,
+    error: favoriteClubsError,
+  } = useQuery<ClubsQuery, Error>(["favoriteClubs", userId], () =>
+    getFavoriteClubs(userId),
+  );
+
+  // Add favorite club
+  const mutationAddFavorite = useMutation(
+    (club: Club) => addFavoriteClub(userId, club),
+    {
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries(["favoriteClubs"]);
       },
-      headers: {
-        "X-RapidAPI-Key": API_KEY,
-        "X-RapidAPI-Host": API_HOST,
-      },
-    };
+    },
+  );
 
-    const response = await axios.request<{ response: ClubApiResponse[] }>(
-      options,
-    );
-    return response.data.response.map((club: ClubApiResponse) => ({
-      id: club.team.id,
-      name: club.team.name,
-      logo: club.team.logo,
-    }));
+  return {
+    allClubs,
+    allClubsLoading,
+    allClubsSuccess,
+    allClubsError,
+    favoriteClubs,
+    favoriteClubsLoading,
+    favoriteClubsSuccess,
+    favoriteClubsError,
+    addFavoriteClub: mutationAddFavorite.mutate,
   };
-
-  const promises = LEAGUE_IDS.map(fetchClubsForLeague);
-  const clubsArrays = await Promise.all(promises);
-
-  // flat() squashes the arrays into one single array
-  const clubsData = clubsArrays.flat();
-  localStorage.setItem("clubsData", JSON.stringify(clubsData));
-  return clubsData;
-};
-
-export const useClubs = () => {
-  const localData = localStorage.getItem("clubsData");
-  const parsedLocalStorageData = localData ? JSON.parse(localData) : null;
-
-  return useQuery<Club[], Error>(["clubs"], fetchClubs, {
-    enabled: !parsedLocalStorageData,
-    initialData: parsedLocalStorageData,
-  });
-};
+}

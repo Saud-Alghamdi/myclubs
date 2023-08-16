@@ -9,11 +9,9 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
-  updateProfile,
 } from "firebase/auth";
 import { createContext } from "react";
 import { AuthProviderProps, AuthContextType } from "../types/customTypes";
-import { getDisplayNameFromEmail } from "../helpers/helpers";
 import Spinner from "../components/Spinner";
 
 // ----- Create Context ----- //
@@ -41,10 +39,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       );
       if (userCredential.user) {
-        if (!userCredential.user.displayName) {
-          const displayName = getDisplayNameFromEmail(email);
-          await updateProfile(userCredential.user, { displayName });
-        }
         setCurrentUser(userCredential.user);
         return true;
       }

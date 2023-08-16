@@ -1,3 +1,5 @@
-export function getDisplayNameFromEmail(email: string): string {
-  return email.substring(0, email.indexOf("@"));
-}
+import { Club } from "../types/customTypes";
+
+export const clubAlreadyExistsInFavorites = (newClub: Club, clubs: Club[]): boolean => {
+  return clubs.some((club) => club.id === newClub.id);
+};
