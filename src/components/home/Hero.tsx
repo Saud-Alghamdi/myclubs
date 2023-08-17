@@ -18,6 +18,9 @@ export default function Hero() {
           match schedules, and results just for you. Say goodbye to endless
           searching and hello to personalized football updates.
         </p>
+        <button className="mt-5 rounded-lg bg-blue-800 px-6 py-3 hover:bg-blue-700 focus:bg-blue-600 active:bg-blue-900">
+          Start Now!
+        </button>
       </div>
     </section>
   );
