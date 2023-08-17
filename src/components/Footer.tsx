@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <>
       {/*Footer container*/}
-      <footer className="mt-20 flex h-40 py-5 flex-col items-center justify-center bg-neutral-900 text-center text-white md:h-32 md:flex-row">
+      <footer className="flex h-40 flex-col items-center justify-center bg-neutral-900 py-5 text-center text-white md:h-32 md:flex-row">
         <div className="flex max-w-[600px] grow items-center justify-center">
           <div className="flex items-center justify-center">
             <a

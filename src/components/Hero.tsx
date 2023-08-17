@@ -9,7 +9,7 @@ export default function Hero() {
         alt=""
       />
       <div className="mx-auto mt-32 w-10/12 sm:max-w-[500px] lg:max-w-[700px]">
-        <h1 className="text-4xl lg:text-6xl font-bold">
+        <h1 className="text-4xl font-bold lg:text-6xl">
           Stay Connected <br /> To Your Favorite Clubs!
         </h1>
         <p className="mt-8 lg:mt-10 lg:text-lg">

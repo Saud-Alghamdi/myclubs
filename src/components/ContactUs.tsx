@@ -1,6 +1,6 @@
 import featuresBg from "../assets/features-bg.jpg";
 
-export default function Features() {
+export default function ContactUs() {
   return (
     <section className="relative p-10 text-gray-200">
       <img
@@ -9,7 +9,7 @@ export default function Features() {
         alt=""
       />
       {/* Header */}
-      <h1 className=" text-center text-3xl font-bold">Features:</h1>
+      <h1 className=" text-center text-3xl font-bold">Contact Us:</h1>
       {/* Grid */}
       <div className="mx-auto mt-10 grid w-1/2 gap-y-10">
         {/* Grid item 1 */}
