@@ -1,4 +1,4 @@
-import { TailwindProps } from "../types/customTypes";
+import { TailwindProps } from "../../types/customTypes";
 
 export default function HamburgerIcon({ tailwindClasses }: TailwindProps) {
   return (

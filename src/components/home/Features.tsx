@@ -1,4 +1,4 @@
-import featuresBg from "../assets/features-bg.jpg";
+import featuresBg from "../../assets/features-bg.jpg";
 
 export default function Features() {
   return (

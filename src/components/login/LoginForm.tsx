@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function LoginForm() {
   const emailRef = useRef<HTMLInputElement>(null);

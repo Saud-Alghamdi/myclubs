@@ -1,5 +1,5 @@
-import { Club } from "../types/customTypes";
-import useClubs from "../hooks/useClubs";
+import { Club } from "../../types/customTypes";
+import useClubs from "../../hooks/useClubs";
 
 export default function FavoriteClubs() {
   const { favoriteClubs, favoriteClubsLoading, favoriteClubsError } =

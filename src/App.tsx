@@ -1,15 +1,15 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import Nav from "./components/Nav";
+import Nav from "./components/shared/Nav";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import MyClubs from "./pages/MyClubs";
 import MyMatches from "./pages/MyMatches";
-import PrivateRoutes from "./components/PrivateRoutes";
-import NonLoggedInRoutes from "./components/NonLoggedInRoutes";
-import Footer from "./components/Footer";
+import PrivateRoutes from "./components/shared/PrivateRoutes";
+import NonLoggedInRoutes from "./components/shared/NonLoggedInRoutes";
+import Footer from "./components/shared/Footer";
 
 const queryClient = new QueryClient();
 

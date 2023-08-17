@@ -1,5 +1,5 @@
-import AllClubs from "../components/AllClubs";
-import FavoriteClubs from "../components/FavoriteClubs";
+import AllClubs from "../components/myclubs/AllClubs";
+import FavoriteClubs from "../components/myclubs/FavoriteClubs";
 
 export default function MyClubs() {
   return (

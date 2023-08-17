@@ -12,7 +12,7 @@ import {
 } from "firebase/auth";
 import { createContext } from "react";
 import { AuthProviderProps, AuthContextType } from "../types/customTypes";
-import Spinner from "../components/Spinner";
+import Spinner from "../components/shared/Spinner";
 
 // ----- Create Context ----- //
 export const AuthContext = createContext<AuthContextType | null>(null);

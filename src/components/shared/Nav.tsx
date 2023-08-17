@@ -1,8 +1,8 @@
 import { useState } from "react";
-import logo from "../assets/logo-icon.png";
+import logo from "../../assets/logo-icon.png";
 import HamburgerIcon from "./HamburgerIcon";
 import { Link } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
