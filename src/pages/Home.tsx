@@ -4,10 +4,10 @@ import ContactUs from "../components/home/ContactUs";
 
 export default function Home() {
   return (
-    <div className="home-page">
+    <main className="home-page">
       <Hero />
       <Features />
       <ContactUs />
-    </div>
+    </main>
   );
 }

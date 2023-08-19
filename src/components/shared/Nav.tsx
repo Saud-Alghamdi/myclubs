@@ -93,9 +93,11 @@ export default function Nav() {
                       Logout
                     </Link>
                   </li>
-                  <li className=" hover:text-red-500 focus:text-red-500 active:text-red-600">
-                    {currentUser.displayName}
-                  </li>
+                  <Link to="/">
+                    <li className=" hover:text-red-500 focus:text-red-500 active:text-red-600">
+                      {currentUser.displayName}
+                    </li>
+                  </Link>
                 </>
               ) : (
                 <>
