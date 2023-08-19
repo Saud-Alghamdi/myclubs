@@ -44,3 +44,7 @@ export type ClubsQuery = {
   msg: string;
   data?: Club[];
 };
+
+export type svgProps = {
+  twStyles?: string;
+};
