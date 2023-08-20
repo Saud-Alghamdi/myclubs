@@ -1,14 +1,13 @@
-import { ref, get, push } from "firebase/database";
+import { remove, ref, get, set } from "firebase/database";
 import db from "../firebase/db";
 import { Club, ClubsApiResponse } from "../types/customTypes";
-import { ClubsQuery } from "../types/customTypes";
-import { clubAlreadyExistsInFavorites } from "../helpers/helpers";
+import { ClubsQueryType } from "../types/customTypes";
 import axios from "axios";
 
 ///---------------------------------------///
 ///-----      GET ALL CLUBS           ----///
 ///---------------------------------------///
-export async function getAllClubs(): Promise<ClubsQuery> {
+export async function getAllClubs(): Promise<ClubsQueryType> {
   try {
     const API_KEY = import.meta.env.VITE_RAPID_API_KEY;
     const API_HOST = import.meta.env.VITE_RAPID_API_HOST;
@@ -65,12 +64,12 @@ export async function getAllClubs(): Promise<ClubsQuery> {
 ///---------------------------------------///
 ///-----      GET FAVORITE CLUBS      ----///
 ///---------------------------------------///
-export async function getFavoriteClubs(userId: string): Promise<ClubsQuery> {
+export async function getFavoriteClubs(userId: string): Promise<ClubsQueryType> {
   if (!userId) {
     return { isSuccess: false, msg: "No user is currently signed in." };
   }
 
-  const dbRef = ref(db, `/users/${userId}/favoriteClubs`);
+  const dbRef = ref(db, `/favoriteClubs/${userId}`);
 
   try {
     const snapshot = await get(dbRef);
@@ -103,30 +102,58 @@ export async function getFavoriteClubs(userId: string): Promise<ClubsQuery> {
 export async function addFavoriteClub(
   userId: string,
   club: Club,
-): Promise<ClubsQuery> {
+): Promise<ClubsQueryType> {
   if (!userId) {
     return { isSuccess: false, msg: "No user is currently signed in." };
   }
 
-  // Fetch user's favorite clubs
-  const favoriteClubsResponse = await getFavoriteClubs(userId);
-  if (!favoriteClubsResponse.isSuccess) {
-    return favoriteClubsResponse;
-  }
-
-  // Check if the club already exists in user's favorite clubs
-  if (
-    favoriteClubsResponse.data &&
-    clubAlreadyExistsInFavorites(club, favoriteClubsResponse.data)
-  ) {
-    return { isSuccess: false, msg: "Club already exists in favorites." };
-  }
-
-  const dbRef = ref(db, `/users/${userId}/favoriteClubs`);
+  const dbRef = ref(db, `/favoriteClubs/${userId}/${club.id}`);
 
   try {
-    await push(dbRef, club);
+    // Fetch the club
+    const snapshot = await get(dbRef);
+    // Check if the club already exists
+    if (snapshot.exists()) {
+      return { isSuccess: false, msg: "Club already exists in favorites." };
+    }
+
+    await set(dbRef, club);
     return { isSuccess: true, msg: "Data written successfully" };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { isSuccess: false, msg: error.message };
+    } else {
+      return { isSuccess: false, msg: "Unknown error occurred" };
+    }
+  }
+}
+
+///---------------------------------------///
+///-----   REMOVE FAVORITE CLUB       ----///
+///---------------------------------------///
+export async function removeFavoriteClub(
+  userId: string,
+  clubId: number,
+): Promise<ClubsQueryType> {
+  if (!userId) {
+    return { isSuccess: false, msg: "No user is currently signed in." };
+  }
+
+  const dbRef = ref(db, `/favoriteClubs/${userId}/${clubId}`);
+
+  try {
+    // Fetch the club
+    const snapshot = await get(dbRef);
+    // Check if the club exists
+    if (!snapshot.exists()) {
+      return { isSuccess: false, msg: "Club not found in favorites." };
+    }
+
+    await remove(dbRef);
+    return {
+      isSuccess: true,
+      msg: "Club removed from favorites successfully",
+    };
   } catch (error) {
     if (error instanceof Error) {
       return { isSuccess: false, msg: error.message };

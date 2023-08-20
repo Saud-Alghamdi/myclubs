@@ -1,8 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getAllClubs } from "../api/getAllClubs";
-import { getFavoriteClubs, addFavoriteClub } from "../services/clubServices";
+import {
+  getFavoriteClubs,
+  addFavoriteClub,
+  removeFavoriteClub,
+} from "../services/clubServices";
 import { useAuth } from "./useAuth";
-import { Club, ClubsQuery } from "../types/customTypes";
+import { Club, ClubsQueryType } from "../types/customTypes";
 
 export default function useClubs() {
   const queryClient = useQueryClient();
@@ -15,7 +19,7 @@ export default function useClubs() {
     isLoading: allClubsLoading,
     isSuccess: allClubsSuccess,
     error: allClubsError,
-  } = useQuery<ClubsQuery, Error>(["allClubs"], getAllClubs);
+  } = useQuery<ClubsQueryType, Error>(["allClubs"], getAllClubs);
 
   // Fetch favorite clubs
   const {
@@ -23,7 +27,7 @@ export default function useClubs() {
     isLoading: favoriteClubsLoading,
     isSuccess: favoriteClubsSuccess,
     error: favoriteClubsError,
-  } = useQuery<ClubsQuery, Error>(["favoriteClubs", userId], () =>
+  } = useQuery<ClubsQueryType, Error>(["favoriteClubs", userId], () =>
     getFavoriteClubs(userId),
   );
 
@@ -32,7 +36,16 @@ export default function useClubs() {
     (club: Club) => addFavoriteClub(userId, club),
     {
       onSuccess: () => {
-        // Invalidate and refetch
+        queryClient.invalidateQueries(["favoriteClubs"]);
+      },
+    },
+  );
+
+  // Remove favorite club
+  const mutationRemoveFavorite = useMutation(
+    (clubId: number) => removeFavoriteClub(userId, clubId),
+    {
+      onSuccess: () => {
         queryClient.invalidateQueries(["favoriteClubs"]);
       },
     },
@@ -48,5 +61,6 @@ export default function useClubs() {
     favoriteClubsSuccess,
     favoriteClubsError,
     addFavoriteClub: mutationAddFavorite.mutate,
+    removeFavoriteClub: mutationRemoveFavorite.mutate,
   };
 }

@@ -42,7 +42,7 @@ export default function Nav() {
                 </Link>
               </li>
               <li className=" hover:text-red-500 focus:text-red-500 active:text-red-600">
-                {currentUser.displayName}
+                <Link to="/">{currentUser.displayName}</Link>
               </li>
             </>
           ) : (
@@ -93,11 +93,10 @@ export default function Nav() {
                       Logout
                     </Link>
                   </li>
-                  <Link to="/">
-                    <li className=" hover:text-red-500 focus:text-red-500 active:text-red-600">
-                      {currentUser.displayName}
-                    </li>
-                  </Link>
+
+                  <li className=" hover:text-red-500 focus:text-red-500 active:text-red-600">
+                    <Link to="/">{currentUser.displayName}</Link>
+                  </li>
                 </>
               ) : (
                 <>

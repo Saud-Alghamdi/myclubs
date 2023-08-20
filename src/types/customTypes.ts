@@ -39,7 +39,7 @@ export type TailwindProps = {
   tailwindClasses?: string;
 };
 
-export type ClubsQuery = {
+export type ClubsQueryType = {
   isSuccess: boolean;
   msg: string;
   data?: Club[];

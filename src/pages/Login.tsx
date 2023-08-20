@@ -5,7 +5,7 @@ export default function Login() {
   return (
     <main className="relative from-transparent to-black px-5 py-12 text-gray-200 md:py-12">
       <img
-        className="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.3]"
+        className="fixed inset-0 -z-10 h-screen w-full object-cover brightness-[0.3]"
         src={pitchBg}
         alt=""
       />
