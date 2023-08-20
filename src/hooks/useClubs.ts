@@ -7,15 +7,19 @@ import {
 } from "../services/clubServices";
 import { useAuth } from "./useAuth";
 import { Club, ClubsQueryType } from "../types/customTypes";
+import { useState, useEffect } from "react";
 
 export default function useClubs() {
+  const [favoriteClubs, setFavoriteClubs] = useState<Club[]>([]);
+  const [allClubs, setAllClubs] = useState<Club[]>([]);
+
   const queryClient = useQueryClient();
   const { currentUser } = useAuth();
   const userId = currentUser!.uid;
 
   // Fetch all clubs
   const {
-    data: allClubs,
+    data: allClubsData,
     isLoading: allClubsLoading,
     isSuccess: allClubsSuccess,
     error: allClubsError,
@@ -23,13 +27,27 @@ export default function useClubs() {
 
   // Fetch favorite clubs
   const {
-    data: favoriteClubs,
+    data: favoriteClubsData,
     isLoading: favoriteClubsLoading,
     isSuccess: favoriteClubsSuccess,
     error: favoriteClubsError,
   } = useQuery<ClubsQueryType, Error>(["favoriteClubs", userId], () =>
     getFavoriteClubs(userId),
   );
+
+  // When allClubsData or favoriteClubsData changes, update allClubs state, to prevent a club from existing in both states
+  useEffect(() => {
+    if (allClubsData && favoriteClubsData) {
+      const favoriteClubIds = new Set(
+        favoriteClubsData.data?.map((club) => club.id),
+      );
+      const uniqueAllClubs = allClubsData.data?.filter(
+        (club) => !favoriteClubIds.has(club.id),
+      );
+      setAllClubs(uniqueAllClubs ?? []);
+      setFavoriteClubs(favoriteClubsData.data ?? []);
+    }
+  }, [allClubsData, favoriteClubsData]);
 
   // Add favorite club
   const mutationAddFavorite = useMutation(

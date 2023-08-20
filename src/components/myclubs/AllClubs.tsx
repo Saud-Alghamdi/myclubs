@@ -7,7 +7,7 @@ export default function AllClubs() {
   const { allClubs, allClubsLoading, allClubsError, addFavoriteClub } =
     useClubs();
 
-  const allClubsSorted = sortBy(allClubs?.data, ["name"]);
+  const allClubsSorted = sortBy(allClubs, ["name"]);
 
   const handleClubClick = (club: Club) => {
     addFavoriteClub(club);

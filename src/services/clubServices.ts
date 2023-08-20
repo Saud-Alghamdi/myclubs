@@ -43,7 +43,7 @@ export async function getAllClubs(): Promise<ClubsQueryType> {
     const promises = LEAGUE_IDS.map(fetchClubsForLeague);
     const clubsArrays = await Promise.all(promises);
 
-    // flat() squashes the arrays into one single array
+    // flat() squashes the arrays into one single array, and in this case, an array of objects
     const clubsData = clubsArrays.flat();
     localStorage.setItem("clubsData", JSON.stringify(clubsData));
 

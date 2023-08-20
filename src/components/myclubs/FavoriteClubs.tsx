@@ -10,7 +10,7 @@ export default function FavoriteClubs() {
     removeFavoriteClub,
   } = useClubs();
 
-  const favoriteClubsSorted = sortBy(favoriteClubs?.data, ["name"]);
+  const favoriteClubsSorted = sortBy(favoriteClubs, ["name"]);
 
   return (
     <section>
