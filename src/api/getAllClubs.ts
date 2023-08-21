@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Club, ClubsApiResponse, ClubsQuery } from "../types/customTypes";
+import { Club, ClubsApiResponse, ClubsQueryType } from "../types/customTypes";
 
 const API_KEY = import.meta.env.VITE_RAPID_API_KEY;
 const API_HOST = import.meta.env.VITE_RAPID_API_HOST;
@@ -9,7 +9,7 @@ const TEAMS_ENDPOINT = "/teams";
 const LEAGUE_IDS = [39, 135, 71, 307, 140, 79, 61]; // Respect Order --> England, Italy, Brazil, Saudi, Spain, Germany, France
 const CLUBS_LOCALSTORAGE_KEY = "clubs";
 
-export const getAllClubs = async (): Promise<ClubsQuery> => {
+export const getAllClubs = async (): Promise<ClubsQueryType> => {
   // Try to get data from localStorage first
   const storedClubs = localStorage.getItem(CLUBS_LOCALSTORAGE_KEY);
   if (storedClubs) {
