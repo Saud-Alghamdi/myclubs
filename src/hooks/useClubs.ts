@@ -1,12 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getAllClubs } from "../api/getAllClubs";
+import { getFavoriteClubsMatches } from "../api/getFavoriteClubsMatches";
 import {
   getFavoriteClubs,
   addFavoriteClub,
   removeFavoriteClub,
 } from "../services/clubServices";
 import { useAuth } from "./useAuth";
-import { Club, ClubsQueryType } from "../types/customTypes";
+import { Club, ClubsQueryType, MatchesQueryType } from "../types/customTypes";
 import { useState, useEffect } from "react";
 
 export default function useClubs() {
@@ -33,6 +34,16 @@ export default function useClubs() {
     error: favoriteClubsError,
   } = useQuery<ClubsQueryType, Error>(["favoriteClubs", userId], () =>
     getFavoriteClubs(userId),
+  );
+
+  // Fetch favorite clubs matches
+  const {
+    data: favoriteClubsMatchesData,
+    isLoading: favoriteClubsMatchesLoading,
+    isSuccess: favoriteClubsMatchesSuccess,
+    error: favoriteClubsMatchesError,
+  } = useQuery<MatchesQueryType, Error>(["favoriteClubsMatches", userId], () =>
+    getFavoriteClubsMatches(userId),
   );
 
   // When allClubsData or favoriteClubsData changes, update allClubs state, to prevent a club from existing in both states
@@ -78,6 +89,10 @@ export default function useClubs() {
     favoriteClubsLoading,
     favoriteClubsSuccess,
     favoriteClubsError,
+    favoriteClubsMatches: favoriteClubsMatchesData,
+    favoriteClubsMatchesLoading,
+    favoriteClubsMatchesSuccess,
+    favoriteClubsMatchesError,
     addFavoriteClub: mutationAddFavorite.mutate,
     removeFavoriteClub: mutationRemoveFavorite.mutate,
   };

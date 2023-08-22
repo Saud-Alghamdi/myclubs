@@ -45,7 +45,6 @@ export async function getAllClubs(): Promise<ClubsQueryType> {
 
     // flat() squashes the arrays into one single array, and in this case, an array of objects
     const clubsData = clubsArrays.flat();
-    localStorage.setItem("clubsData", JSON.stringify(clubsData));
 
     return {
       isSuccess: true,
@@ -64,7 +63,9 @@ export async function getAllClubs(): Promise<ClubsQueryType> {
 ///---------------------------------------///
 ///-----      GET FAVORITE CLUBS      ----///
 ///---------------------------------------///
-export async function getFavoriteClubs(userId: string): Promise<ClubsQueryType> {
+export async function getFavoriteClubs(
+  userId: string,
+): Promise<ClubsQueryType> {
   if (!userId) {
     return { isSuccess: false, msg: "No user is currently signed in." };
   }
