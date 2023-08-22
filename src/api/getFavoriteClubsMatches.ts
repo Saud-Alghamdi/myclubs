@@ -6,7 +6,11 @@ import {
   FavoriteClubsMatchesReturnType,
 } from "../types/customTypes";
 import { getFavoriteClubs } from "../services/clubServices";
-import { removeDuplicateMatches } from "../helpers/helpers";
+import {
+  removeDuplicateMatches,
+  convertTimestampToDateAndTime,
+} from "../helpers/helpers";
+import { sortBy } from "lodash";
 
 const API_KEY = import.meta.env.VITE_RAPID_API_KEY;
 const API_HOST = import.meta.env.VITE_RAPID_API_HOST;
@@ -66,16 +70,22 @@ export const getFavoriteClubsMatches = async (
         response: FavoriteClubMatchAPIResponse[];
       }>(options);
       return response.data.response.map(
-        (matchData: FavoriteClubMatchAPIResponse) => ({
-          club1Id: matchData.teams.home.id,
-          club1Name: matchData.teams.home.name,
-          club1Logo: matchData.teams.home.logo,
-          club2Id: matchData.teams.away.id,
-          club2Name: matchData.teams.away.name,
-          club2Logo: matchData.teams.away.logo,
-          matchId: matchData.fixture.id,
-          timestamp: matchData.fixture.timestamp,
-        }),
+        (matchData: FavoriteClubMatchAPIResponse) => {
+          const timestamp = Number(matchData.fixture.timestamp);
+          const { date, time } = convertTimestampToDateAndTime(timestamp);
+
+          return {
+            club1Id: matchData.teams.home.id,
+            club1Name: matchData.teams.home.name,
+            club1Logo: matchData.teams.home.logo,
+            club2Id: matchData.teams.away.id,
+            club2Name: matchData.teams.away.name,
+            club2Logo: matchData.teams.away.logo,
+            matchId: matchData.fixture.id,
+            date,
+            time,
+          };
+        },
       );
     };
 
@@ -83,12 +93,20 @@ export const getFavoriteClubsMatches = async (
     const matchesArrays = await Promise.all(matchesPromises);
 
     // flat() squashes the arrays into one single array
-    const matchesData = removeDuplicateMatches(matchesArrays.flat());
+    let matchesData = removeDuplicateMatches(matchesArrays.flat());
+
+    // Sort matches by date and time. This modifies the original array.
+    matchesData = sortBy(matchesData, (match) => {
+      const dateTime = new Date(`${match.date} ${match.time}`);
+      return dateTime.getTime();
+    });
 
     // Store the data along with an expiration date 24 hours from now
     localStorage.setItem(MATCHES_LOCALSTORAGE_KEY, JSON.stringify(matchesData));
     const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + 1); // Set the expiry date to 24 hours from now
+
+    // Set the expiry date to 24 hours from now
+    expiryDate.setDate(expiryDate.getDate() + 1);
     localStorage.setItem(
       MATCHES_LOCALSTORAGE_KEY + "_expiry",
       JSON.stringify(expiryDate),
