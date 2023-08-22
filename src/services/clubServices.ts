@@ -2,6 +2,7 @@ import { remove, ref, get, set } from "firebase/database";
 import db from "../firebase/db";
 import { Club, ClubsApiResponse } from "../types/customTypes";
 import { ClubsQueryType } from "../types/customTypes";
+import { clearMatchesFromLocalStorage } from "../helpers/helpers";
 import axios from "axios";
 
 ///---------------------------------------///
@@ -119,6 +120,7 @@ export async function addFavoriteClub(
     }
 
     await set(dbRef, club);
+    clearMatchesFromLocalStorage();
     return { isSuccess: true, msg: "Data written successfully" };
   } catch (error) {
     if (error instanceof Error) {
@@ -151,6 +153,7 @@ export async function removeFavoriteClub(
     }
 
     await remove(dbRef);
+    clearMatchesFromLocalStorage();
     return {
       isSuccess: true,
       msg: "Club removed from favorites successfully",

@@ -7,11 +7,10 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const SEASON = "2023";
 const TEAMS_ENDPOINT = "/teams";
 const LEAGUE_IDS = [39, 135, 71, 307, 140, 79, 61]; // Respect Order --> England, Italy, Brazil, Saudi, Spain, Germany, France
-const CLUBS_LOCALSTORAGE_KEY = "clubs";
 
 export const getAllClubs = async (): Promise<ClubsQueryType> => {
   // Try to get data from localStorage first
-  const storedClubs = localStorage.getItem(CLUBS_LOCALSTORAGE_KEY);
+  const storedClubs = localStorage.getItem("clubs");
   if (storedClubs) {
     return JSON.parse(storedClubs);
   }
@@ -54,7 +53,7 @@ export const getAllClubs = async (): Promise<ClubsQueryType> => {
     };
 
     // Store the result into localStorage for future use.
-    localStorage.setItem(CLUBS_LOCALSTORAGE_KEY, JSON.stringify(result));
+    localStorage.setItem("clubs", JSON.stringify(result));
 
     return result;
   } catch (error) {

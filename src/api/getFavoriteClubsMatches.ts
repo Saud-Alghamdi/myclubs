@@ -19,13 +19,19 @@ export const getFavoriteClubsMatches = async (
   userId: string,
 ): Promise<FavoriteClubsMatchesReturnType> => {
   const storedMatches = localStorage.getItem(MATCHES_LOCALSTORAGE_KEY);
+  const storedMatchesExpiry = localStorage.getItem(
+    MATCHES_LOCALSTORAGE_KEY + "_expiry",
+  );
 
-  if (storedMatches) {
-    return {
-      isSuccess: true,
-      msg: "Successfully fetched favorite clubs' matches from local storage",
-      data: JSON.parse(storedMatches),
-    };
+  if (storedMatches && storedMatchesExpiry) {
+    const expiryDate = new Date(JSON.parse(storedMatchesExpiry));
+    if (new Date() < expiryDate) {
+      return {
+        isSuccess: true,
+        msg: "Successfully fetched favorite clubs' matches from local storage",
+        data: JSON.parse(storedMatches),
+      };
+    }
   }
 
   try {
@@ -79,7 +85,14 @@ export const getFavoriteClubsMatches = async (
     // flat() squashes the arrays into one single array
     const matchesData = removeDuplicateMatches(matchesArrays.flat());
 
+    // Store the data along with an expiration date 24 hours from now
     localStorage.setItem(MATCHES_LOCALSTORAGE_KEY, JSON.stringify(matchesData));
+    const expiryDate = new Date();
+    expiryDate.setDate(expiryDate.getDate() + 1); // Set the expiry date to 24 hours from now
+    localStorage.setItem(
+      MATCHES_LOCALSTORAGE_KEY + "_expiry",
+      JSON.stringify(expiryDate),
+    );
 
     return {
       isSuccess: true,

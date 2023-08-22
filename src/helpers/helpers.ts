@@ -12,3 +12,7 @@ export const removeDuplicateMatches = (
 
   return uniqueMatches;
 };
+
+export const clearMatchesFromLocalStorage = (): void => {
+  localStorage.removeItem("matches");
+};
