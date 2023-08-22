@@ -6,6 +6,7 @@ import {
   FavoriteClubsMatchesReturnType,
 } from "../types/customTypes";
 import { getFavoriteClubs } from "../services/clubServices";
+import { removeDuplicateMatches } from "../helpers/helpers";
 
 const API_KEY = import.meta.env.VITE_RAPID_API_KEY;
 const API_HOST = import.meta.env.VITE_RAPID_API_HOST;
@@ -67,7 +68,7 @@ export const getFavoriteClubsMatches = async (
           club2Name: matchData.teams.away.name,
           club2Logo: matchData.teams.away.logo,
           matchId: matchData.fixture.id,
-          date: matchData.fixture.date,
+          timestamp: matchData.fixture.timestamp,
         }),
       );
     };
@@ -76,7 +77,7 @@ export const getFavoriteClubsMatches = async (
     const matchesArrays = await Promise.all(matchesPromises);
 
     // flat() squashes the arrays into one single array
-    const matchesData = matchesArrays.flat();
+    const matchesData = removeDuplicateMatches(matchesArrays.flat());
 
     localStorage.setItem(MATCHES_LOCALSTORAGE_KEY, JSON.stringify(matchesData));
 

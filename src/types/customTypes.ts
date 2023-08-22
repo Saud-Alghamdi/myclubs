@@ -69,7 +69,7 @@ export type FavoriteClubMatch = {
   club2Name: string;
   club2Logo: string;
   matchId: number;
-  date: string;
+  timestamp: string;
 };
 
 export type FavoriteClubMatchAPIResponse = {
@@ -87,6 +87,6 @@ export type FavoriteClubMatchAPIResponse = {
   };
   fixture: {
     id: number;
-    date: string;
+    timestamp: string;
   };
 };

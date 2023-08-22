@@ -21,7 +21,7 @@ export default function Matches() {
             {/* Col 1 - Time &  Date */}
             <div className=" col flex w-full items-center justify-center gap-x-10 md:gap-x-20">
               <span className="text-md md:text-xl xl:text-2xl">
-                {match.date}
+                {match.timestamp}
               </span>
             </div>
             {/* Col 2 - First team */}
