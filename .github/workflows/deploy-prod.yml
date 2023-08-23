@@ -33,4 +33,4 @@ jobs:
       - name: Deploy to Firebase
         run: firebase deploy --only hosting:myclubs-prod-4fa34
         env:
-          PROD_FIREBASE_TOKEN: ${{ secrets.PROD_FIREBASE_TOKEN }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
