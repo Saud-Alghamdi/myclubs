@@ -51,6 +51,7 @@ export const getAllClubs = async (): Promise<ClubsQueryType> => {
       msg: "Successfully fetched all clubs",
       data: clubsData,
     };
+    console.log(result.msg);
 
     // Store the result into localStorage for future use.
     localStorage.setItem("clubs", JSON.stringify(result));
@@ -64,9 +65,13 @@ export const getAllClubs = async (): Promise<ClubsQueryType> => {
       errorMessage = error.message;
     }
 
-    return {
+    const result = {
       isSuccess: false,
-      msg: `Failed to fetch all clubs: ${errorMessage}`,
+      msg: errorMessage,
     };
+    console.log(
+      `Error inside getAllClubs.ts, inside getAllClubs function. ${result.msg}`,
+    );
+    return result;
   }
 };
