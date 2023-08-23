@@ -67,9 +67,7 @@ export const getAllClubs = async (): Promise<ClubsQueryType> => {
     }
 
     const result = {
-    const result = {
       isSuccess: false,
-      msg: errorMessage,
       msg: errorMessage,
     };
     console.log(
