@@ -50,7 +50,11 @@ export const getFavoriteClubsMatches = async (
       };
     }
 
-    const favoriteClubIds: number[] = data.map((club: Club) => club.id);
+    console.log("What get favorite clubs is returning in getFavoriteClubsMatches.ts at line 54:");
+    console.log(isSuccess);
+    console.log(data);    
+
+    const favoriteClubsIds: number[] = data.map((club: Club) => club.id);
 
     const getMatchesForClub = async (
       clubId: number,
@@ -91,7 +95,7 @@ export const getFavoriteClubsMatches = async (
       );
     };
 
-    const matchesPromises = favoriteClubIds.map(getMatchesForClub);
+    const matchesPromises = favoriteClubsIds.map(getMatchesForClub);
     const matchesArrays = await Promise.all(matchesPromises);
 
     // flat() squashes the arrays into one single array
@@ -119,8 +123,6 @@ export const getFavoriteClubsMatches = async (
       msg: "Successfully fetched favorite clubs' matches",
       data: matchesData,
     };
-    console.log(result.msg);
-    return result;
     console.log(result.msg);
     return result;
   } catch (error) {

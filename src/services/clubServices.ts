@@ -33,9 +33,6 @@ export async function getFavoriteClubs(
         isSuccess: false,
         msg: "No favorite clubs data available",
       };
-      console.log(
-        `Error inside clubServices.ts, inside getFavoriteClubs function. ${result.msg}`,
-      );
       return result;
     }
   } catch (error) {
