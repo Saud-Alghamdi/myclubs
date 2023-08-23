@@ -50,10 +50,6 @@ export const getFavoriteClubsMatches = async (
       };
     }
 
-    console.log("What get favorite clubs is returning in getFavoriteClubsMatches.ts at line 54:");
-    console.log(isSuccess);
-    console.log(data);    
-
     const favoriteClubsIds: number[] = data.map((club: Club) => club.id);
 
     const getMatchesForClub = async (
@@ -75,6 +71,10 @@ export const getFavoriteClubsMatches = async (
       const response = await axios.request<{
         response: FavoriteClubMatchAPIResponse[];
       }>(options);
+
+      console.log("What response prints in line 75");
+      console.log(response);
+
       return response.data.response.map(
         (matchData: FavoriteClubMatchAPIResponse) => {
           const timestamp = Number(matchData.fixture.timestamp);
@@ -94,6 +94,9 @@ export const getFavoriteClubsMatches = async (
         },
       );
     };
+    
+    console.log("What favoriteClubsIds prints in line 99");
+    console.log(favoriteClubsIds);
 
     const matchesPromises = favoriteClubsIds.map(getMatchesForClub);
     const matchesArrays = await Promise.all(matchesPromises);
