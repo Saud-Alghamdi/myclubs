@@ -14,7 +14,7 @@ import Footer from "./components/shared/Footer";
 const queryClient = new QueryClient();
 
 export default function App() {
-  console.log("Hello from App.tsx");
+  console.log("Hello from App.tsx!");
 
   return (
     <QueryClientProvider client={queryClient}>
