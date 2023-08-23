@@ -11,7 +11,9 @@ export async function getFavoriteClubs(
   userId: string,
 ): Promise<ClubsQueryType> {
   if (!userId) {
-    return { isSuccess: false, msg: "No user is currently signed in." };
+    const result = { isSuccess: false, msg: "No user is currently signed in." };
+    console.log(result.msg);
+    return result;
   }
 
   const dbRef = ref(db, `/favoriteClubs/${userId}`);
@@ -29,7 +31,7 @@ export async function getFavoriteClubs(
     } else {
       const result = {
         isSuccess: false,
-        msg: "No data available",
+        msg: "No favorite clubs data available",
       };
       console.log(
         `Error inside clubServices.ts, inside getFavoriteClubs function. ${result.msg}`,
@@ -62,7 +64,9 @@ export async function addFavoriteClub(
   club: Club,
 ): Promise<ClubsQueryType> {
   if (!userId) {
-    return { isSuccess: false, msg: "No user is currently signed in." };
+    const result = { isSuccess: false, msg: "No user is currently signed in." };
+    console.log(result.msg);
+    return result;
   }
 
   const dbRef = ref(db, `/favoriteClubs/${userId}/${club.id}`);
@@ -72,7 +76,12 @@ export async function addFavoriteClub(
     const snapshot = await get(dbRef);
     // Check if the club already exists
     if (snapshot.exists()) {
-      return { isSuccess: false, msg: "Club already exists in favorites." };
+      const result = {
+        isSuccess: false,
+        msg: "Club already exists in favorites.",
+      };
+      console.log(result.msg);
+      return result;
     }
 
     await set(dbRef, club);
@@ -104,7 +113,9 @@ export async function removeFavoriteClub(
   clubId: number,
 ): Promise<ClubsQueryType> {
   if (!userId) {
-    return { isSuccess: false, msg: "No user is currently signed in." };
+    const result = { isSuccess: false, msg: "No user is currently signed in." };
+    console.log(result.msg);
+    return result;
   }
 
   const dbRef = ref(db, `/favoriteClubs/${userId}/${clubId}`);
@@ -114,15 +125,22 @@ export async function removeFavoriteClub(
     const snapshot = await get(dbRef);
     // Check if the club exists
     if (!snapshot.exists()) {
-      return { isSuccess: false, msg: "Club not found in favorites." };
+      const result = {
+        isSuccess: false,
+        msg: "Club not found in favorites.",
+      };
+      console.log(result.msg);
+      return result;
     }
 
     await remove(dbRef);
     clearMatchesFromLocalStorage();
-    return {
+    const result = {
       isSuccess: true,
       msg: "Club removed from favorites successfully",
     };
+    console.log(result.msg);
+    return result;
   } catch (error) {
     let errorMessage = "Unknown error occurred";
     if (error instanceof Error) {

@@ -52,6 +52,7 @@ export const getAllClubs = async (): Promise<ClubsQueryType> => {
       data: clubsData,
     };
     console.log(result.msg);
+    console.log(result.msg);
 
     // Store the result into localStorage for future use.
     localStorage.setItem("clubs", JSON.stringify(result));
@@ -66,7 +67,9 @@ export const getAllClubs = async (): Promise<ClubsQueryType> => {
     }
 
     const result = {
+    const result = {
       isSuccess: false,
+      msg: errorMessage,
       msg: errorMessage,
     };
     console.log(
