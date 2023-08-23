@@ -30,11 +30,13 @@ export const getFavoriteClubsMatches = async (
   if (storedMatches && storedMatchesExpiry) {
     const expiryDate = new Date(JSON.parse(storedMatchesExpiry));
     if (new Date() < expiryDate) {
-      return {
+      const result = {
         isSuccess: true,
         msg: "Successfully fetched favorite clubs' matches from local storage",
         data: JSON.parse(storedMatches),
       };
+      console.log(result.msg);
+      return result;
     }
   }
 
@@ -112,20 +114,24 @@ export const getFavoriteClubsMatches = async (
       JSON.stringify(expiryDate),
     );
 
-    return {
+    const result = {
       isSuccess: true,
       msg: "Successfully fetched favorite clubs' matches",
       data: matchesData,
     };
+    console.log(result.msg);
+    return result;
   } catch (error) {
     let errorMessage = "Failed to fetch favorite clubs' matches";
     if (error instanceof Error) {
       errorMessage = error.message;
     }
 
-    return {
+    const result = {
       isSuccess: false,
       msg: errorMessage,
     };
+    console.log(result.msg);
+    return result;
   }
 };
