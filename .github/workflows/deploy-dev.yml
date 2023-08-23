@@ -18,7 +18,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_DEV_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
           VITE_RAPID_API_KEY: ${{ secrets.VITE_RAPID_API_KEY }}
           VITE_RAPID_API_HOST: ${{ secrets.VITE_RAPID_API_HOST }}
           VITE_DEV_FIREBASE_API_KEY: ${{ secrets.VITE_DEV_FIREBASE_API_KEY }}
