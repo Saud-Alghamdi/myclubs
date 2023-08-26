@@ -44,6 +44,9 @@ export default function SignupForm() {
       className="md:text-md mx-auto mt-10 max-w-[500px] space-y-6 rounded-2xl bg-slate-300 px-5 py-8 text-sm text-gray-900 "
       onSubmit={handleSubmit}
     >
+      {error && (
+        <span className="block font-semibold text-red-600">{error}</span>
+      )}
       <div>
         <label
           htmlFor="email"
@@ -76,7 +79,6 @@ export default function SignupForm() {
           ref={passwordRef}
         />
       </div>
-      {error && <span style={{ color: "red" }}>{error}</span>}
       <button
         type="submit"
         className="w-full rounded-lg bg-blue-700 px-5 py-3 text-center  font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
