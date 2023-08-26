@@ -1,0 +1,16 @@
+{
+  "signup": {
+    "error": {
+      "invalidEmail": "● Invalid Email Address.",
+      "emailInUse": "● This email is already in use.",
+      "weakPassword": "● Your password is a bit too easy. Try a mix of letters, numbers, and symbols.",
+      "missingPassword": "● Please enter a password.",
+      "operationNotAllowed": "● Sorry, this operation isn't allowed. If you think this is a mistake, please contact support.",
+      "tooManyRequests": "● You've made too many requests in a short time. Please wait a bit and try again.",
+      "defaultError": "● Something went wrong. Please try again later."
+    },
+    "success": {
+      "signupSuccess": "Sign up successful!"
+    }
+  }
+}

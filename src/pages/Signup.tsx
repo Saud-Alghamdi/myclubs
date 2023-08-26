@@ -3,7 +3,7 @@ import pitchBg from "../assets/pitch-bg.jpg"
 
 export default function Signup() {
   return (
-    <main className="relative from-transparent to-black px-5 py-12 text-gray-200 md:py-12">
+    <main className="relative from-transparent to-black px-5 py-12 text-gray-200 md:py-12 min-h-screen">
       <img
         className="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.3]"
         src={pitchBg}
