@@ -14,7 +14,7 @@ export default function ContactUs() {
   };
 
   return (
-    <section className="fading-in relative from-transparent to-black px-5 py-16 text-gray-200 md:py-24">
+    <section className="fading-in relative from-transparent to-black px-5 py-16 text-gray-200 md:py-24 min-h-screen">
       <img
         className="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.3]"
         src={contactUsBg}
