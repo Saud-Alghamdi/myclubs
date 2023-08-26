@@ -57,6 +57,7 @@ export default function SignupForm() {
           id="email"
           className="w-full rounded-lg border-2 p-2.5 text-neutral-900 outline-none outline focus:border-blue-500 focus:ring-blue-500"
           placeholder="name@company.com"
+          ref={emailRef}
         />
       </div>
       <div>
@@ -97,10 +98,7 @@ export default function SignupForm() {
       </button>
       <p className="text-sm font-light text-gray-500">
         Already have an account?{" "}
-        <Link
-          to="/login"
-          className="font-medium text-gray-700 hover:underline"
-        >
+        <Link to="/login" className="font-medium text-gray-700 hover:underline">
           Login
         </Link>
       </p>
