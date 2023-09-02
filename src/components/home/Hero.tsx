@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import heroBg from "../../assets/hero-bg.jpg";
 import { useInView } from "react-intersection-observer";
+import heroBg from "../../assets/hero-bg.jpg";
+import ImageComponent from "../shared/ImageComponent";
 
 export default function Hero() {
   const { ref, inView } = useInView({
@@ -14,10 +15,12 @@ export default function Hero() {
 
   return (
     <section className="background-radial-gradient fading-out relative h-screen overflow-hidden bg-center text-gray-200">
-      <img
-        className="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.4]"
+      <ImageComponent
         src={heroBg}
-        alt=""
+        blurHash="L89*MA%KRDtP.5M|a#bF~qofx?t6"
+        blurTwStyles="!absolute !h-full !w-full brightness-[0.4]"
+        originalTwStyles="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.4]"
+        alt="Football Field Background"
       />
       <div className="mx-auto mt-32 w-10/12 sm:max-w-[500px] lg:max-w-[700px]">
         <motion.h1

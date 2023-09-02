@@ -91,3 +91,11 @@ export type FavoriteClubMatchAPIResponse = {
     timestamp: string;
   };
 };
+
+export type imageComponentProps = {
+  src: string;
+  blurHash: string;
+  blurTwStyles: string;
+  originalTwStyles: string;
+  alt: string;
+};
