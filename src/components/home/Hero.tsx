@@ -18,7 +18,7 @@ export default function Hero() {
       <ImageComponent
         src={heroBg}
         blurHash="L89*MA%KRDtP.5M|a#bF~qofx?t6"
-        blurTwStyles="!absolute !h-full !w-full brightness-[0.4]"
+        blurTwStyles="!absolute !inset-0 !-z-10 !h-full !w-full !object-cover !brightness-[0.4]"
         originalTwStyles="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.4]"
         alt="Football Field Background"
       />

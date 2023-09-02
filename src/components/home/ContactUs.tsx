@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import contactUsBg from "../../assets/contactus-bg.jpg";
 import ContactUsForm from "./ContactUsForm";
+import ImageComponent from "../shared/ImageComponent";
 
 export default function ContactUs() {
   const { ref, inView } = useInView({
@@ -14,11 +15,13 @@ export default function ContactUs() {
   };
 
   return (
-    <section className="fading-in relative from-transparent to-black px-5 py-16 text-gray-200 md:py-24 min-h-screen">
-      <img
-        className="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.3]"
+    <section className="fading-in relative min-h-screen from-transparent to-black px-5 py-16 text-gray-200 md:py-24">
+      <ImageComponent
         src={contactUsBg}
-        alt=""
+        blurHash="LzC@y%kWMxkD.AoNRPbbS%t7jYWq"
+        blurTwStyles="!absolute !inset-0 !-z-10 !h-full !w-full !object-cover !brightness-[0.4]"
+        originalTwStyles="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.4]"
+        alt="Football Field Background"
       />
       {/* Header */}
       <motion.h1

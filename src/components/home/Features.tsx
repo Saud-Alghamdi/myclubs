@@ -4,6 +4,7 @@ import featuresBg from "../../assets/features-bg.jpg";
 import PersonalizedExperienceIcon from "../svg/PersonalizedExperienceIcon";
 import LightningIcon from "../svg/LightningIcon";
 import NotificationsIcon from "../svg/NotificationsIcon";
+import ImageComponent from "../shared/ImageComponent";
 
 export default function Features() {
   const { ref, inView } = useInView({
@@ -16,11 +17,13 @@ export default function Features() {
   };
 
   return (
-    <section className="fading-in fading-out relative  py-16 text-gray-200 md:py-24 min-h-screen">
-      <img
-        className="absolute inset-0 -z-10 h-full w-full object-center brightness-[0.4]"
+    <section className="fading-in fading-out relative  min-h-screen py-16 text-gray-200 md:py-24">
+      <ImageComponent
         src={featuresBg}
-        alt=""
+        blurHash="L52ZoBsna1ofHaWUo|WB*GofV@kB"
+        blurTwStyles="!absolute !h-full !brightness-[0.4] !object-cover !w-full  !-z-10 !inset-0"
+        originalTwStyles="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.4]"
+        alt="Football Field Background"
       />
       {/* Header */}
       <motion.h1
