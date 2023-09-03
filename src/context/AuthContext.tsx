@@ -23,6 +23,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [firebaseIsCheckingAuth, setFirebaseIsCheckingAuth] = useState(true);
 
   const auth = getAuth(app);
 
@@ -123,20 +124,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   /*
   onAuthStateChanged() listens to firebase auth state changes in firebase's auth system, if a change happens, it runs a callback function that has a firebase user object as a parameter.
-  This useEffect checks the user state on these conditions:
-  1- on page refresh
-  2- when navigating to another route
-  3- when the auth state changes (a login happens, a signup happens, a logout happens)
+  This useEffect runs and checks the user state on these conditions:
+  1- on page refresh (due to component unmount)
+  2- when the auth state changes (a login happens, a signup happens, a logout happens) (due to auth dependency)
   */
   useEffect(() => {
-    const cleanup = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-
       setLoading(false);
+      // When the auth state has been checked, set FirebaseIsCheckingAuth to false
+      setFirebaseIsCheckingAuth(false);
     });
 
     // Clean up the subscription on unmount
-    return cleanup;
+    return unsubscribe;
   }, [auth]);
 
   return (
@@ -150,9 +151,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         loginWithGoogle,
         logout,
         loading,
+        firebaseIsCheckingAuth,
       }}
     >
-      {loading && <Spinner />}
+      {firebaseIsCheckingAuth && <Spinner />}
       {children}
     </AuthContext.Provider>
   );

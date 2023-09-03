@@ -15,6 +15,7 @@ export type AuthContextType = {
   loginWithGoogle: () => Promise<boolean>;
   logout: () => Promise<boolean>;
   loading: boolean;
+  firebaseIsCheckingAuth: boolean;
 };
 
 export type AuthProviderProps = {
