@@ -15,6 +15,7 @@ export type AuthContextType = {
   loginWithGoogle: () => Promise<boolean>;
   logout: () => Promise<boolean>;
   loading: boolean;
+  firebaseIsCheckingAuth: boolean;
 };
 
 export type AuthProviderProps = {
@@ -90,4 +91,12 @@ export type FavoriteClubMatchAPIResponse = {
     id: number;
     timestamp: string;
   };
+};
+
+export type imageComponentProps = {
+  src: string;
+  blurHash: string;
+  blurTwStyles: string;
+  originalTwStyles: string;
+  alt: string;
 };
