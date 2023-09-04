@@ -46,7 +46,7 @@ export default function useClubs() {
     getFavoriteClubsMatches(userId),
   );
 
-  // When allClubsData or favoriteClubsData changes, update allClubs state, to prevent a club from existing in both states
+  // Prevent club from existing in both favoriteClubs and allClubs states by updating allClubs state When allClubsData or favoriteClubsData changes.
   useEffect(() => {
     if (allClubsData && favoriteClubsData) {
       const favoriteClubIds = new Set(
@@ -61,7 +61,7 @@ export default function useClubs() {
   }, [allClubsData, favoriteClubsData]);
 
   // Add favorite club
-  const mutationAddFavorite = useMutation(
+  const mutationAddFavoriteClub = useMutation(
     (club: Club) => addFavoriteClub(userId, club),
     {
       onSuccess: () => {
@@ -71,7 +71,7 @@ export default function useClubs() {
   );
 
   // Remove favorite club
-  const mutationRemoveFavorite = useMutation(
+  const mutationRemoveFavoriteClub = useMutation(
     (clubId: number) => removeFavoriteClub(userId, clubId),
     {
       onSuccess: () => {
@@ -93,7 +93,14 @@ export default function useClubs() {
     favoriteClubsMatchesLoading,
     favoriteClubsMatchesSuccess,
     favoriteClubsMatchesError,
-    addFavoriteClub: mutationAddFavorite.mutate,
-    removeFavoriteClub: mutationRemoveFavorite.mutate,
+    // Mutations
+    addFavoriteClub: mutationAddFavoriteClub.mutate,
+    addFavoriteClubLoading: mutationAddFavoriteClub.isLoading,
+    addFavoriteClubError: mutationAddFavoriteClub.error,
+    addFavoriteClubSuccess: mutationAddFavoriteClub.isSuccess,
+    removeFavoriteClub: mutationRemoveFavoriteClub.mutate,
+    removeFavoriteClubLoading: mutationRemoveFavoriteClub.isLoading,
+    removeFavoriteClubError: mutationRemoveFavoriteClub.error,
+    removeFavoriteClubSuccess: mutationRemoveFavoriteClub.isSuccess,
   };
 }
