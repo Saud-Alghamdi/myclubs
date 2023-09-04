@@ -14,7 +14,9 @@ export default function FavoriteClubs() {
 
   return (
     <section>
-      <h3 className="text-2xl font-bold md:text-3xl">Your Favorite Clubs:</h3>
+      <h3 className="text-center text-2xl font-bold md:text-3xl xl:text-4xl">
+        Your Favorite Clubs:
+      </h3>
 
       {favoriteClubsLoading && <div>Loading...</div>}
 

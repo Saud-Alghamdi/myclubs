@@ -15,7 +15,7 @@ export default function AllClubs() {
 
   return (
     <section className="mt-20">
-      <h3 className="text-2xl font-bold md:text-3xl">All Clubs:</h3>
+      <h3 className="text-2xl font-bold md:text-3xl xl:text-4xl text-center">All Clubs:</h3>
 
       {allClubsLoading && <div>Loading...</div>}
 

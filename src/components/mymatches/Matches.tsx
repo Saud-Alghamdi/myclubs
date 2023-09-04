@@ -6,7 +6,7 @@ export default function Matches() {
   return (
     <section>
       <header>
-        <h1 className="text-2xl font-bold md:text-3xl">
+        <h1 className="text-center text-2xl font-bold md:text-3xl xl:text-4xl">
           Your Upcoming Matches:
         </h1>
       </header>

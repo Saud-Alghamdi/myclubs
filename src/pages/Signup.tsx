@@ -12,7 +12,7 @@ export default function Signup() {
         originalTwStyles="fixed inset-0 -z-10 h-screen w-full object-cover brightness-[0.3]"
         alt="Pitch Background"
       />
-      <h1 className="lg:text-5xl0 text-center text-3xl font-bold md:text-4xl">
+      <h1 className="text-2xl font-bold md:text-3xl xl:text-4xl text-center">
         Sign up
       </h1>
       <SignupForm />
