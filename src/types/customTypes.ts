@@ -100,3 +100,8 @@ export type imageComponentProps = {
   originalTwStyles: string;
   alt: string;
 };
+
+export type ToastProps = {
+  text: string;
+  isSuccess: boolean;
+};
