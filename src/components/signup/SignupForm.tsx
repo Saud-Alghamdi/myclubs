@@ -7,11 +7,9 @@ export default function SignupForm() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const authContext = useAuth();
-  const navigate = useNavigate();
-
   const { signupWithEmailAndPassword, error, setError, loginWithGoogle } =
-    authContext;
+    useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
