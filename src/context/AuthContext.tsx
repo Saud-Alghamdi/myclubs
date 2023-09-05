@@ -162,7 +162,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         firebaseIsCheckingAuth,
       }}
     >
-      {firebaseIsCheckingAuth && <Spinner />}
+      {(firebaseIsCheckingAuth || loading) && <Spinner />}
       {children}
     </AuthContext.Provider>
   );
