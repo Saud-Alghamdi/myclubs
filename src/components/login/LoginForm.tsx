@@ -60,6 +60,7 @@ export default function LoginForm() {
           id="email"
           className="w-full rounded-lg border-2 p-2.5 text-neutral-900 outline-none outline focus:border-blue-500 focus:ring-blue-500"
           placeholder="name@company.com"
+          ref={emailRef}
         />
       </div>
       <div>
