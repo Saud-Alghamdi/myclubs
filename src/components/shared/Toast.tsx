@@ -7,13 +7,15 @@ export default function Toast({ message, isSuccessToastType }: ToastProps) {
   // This state controlls the close "X" button
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
-  // Close Toast automatically after 4 seconds
+  // Close Toast automatically after 3 seconds
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsVisible(false);
-    }, 400);
+    }, 3000);
 
-    return () => clearTimeout(timeoutId);
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   // If toast is not visible, don't render anything

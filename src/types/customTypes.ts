@@ -113,4 +113,10 @@ export type ToastProviderProps = {
 export type ToastEventContextType = {
   isSignupSuccessful: boolean;
   setIsSignupSuccessful: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isLoginSuccessful: boolean;
+  setIsLoginSuccessful: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isLogoutSuccessful: boolean;
+  setIsLogoutSuccessful: React.Dispatch<React.SetStateAction<boolean>>;
 };

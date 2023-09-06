@@ -1,0 +1,14 @@
+{
+  "signup": {
+    "success": "Signed up successfully!",
+    "error": "Sign up failed, please try again."
+  },
+  "login": {
+    "success": "Logged in successfully!",
+    "error": "Login failed, please try again."
+  },
+  "logout": {
+    "success": "Logged out successfully!",
+    "error": "Logout failed, please try again."
+  }
+}

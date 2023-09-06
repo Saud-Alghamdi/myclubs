@@ -13,11 +13,22 @@ export const ToastEventContext = createContext<ToastEventContextType | null>(
 
 // context provider
 export function ToastEventProvider({ children }: ToastProviderProps) {
+  // Toast event states
   const [isSignupSuccessful, setIsSignupSuccessful] = useState(false);
+  const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
+  const [isLogoutSuccessful, setIsLogoutSuccessful] = useState(false);
+  
 
   return (
     <ToastEventContext.Provider
-      value={{ isSignupSuccessful, setIsSignupSuccessful }}
+      value={{
+        isSignupSuccessful,
+        setIsSignupSuccessful,
+        isLogoutSuccessful,
+        setIsLogoutSuccessful,
+        isLoginSuccessful,
+        setIsLoginSuccessful
+      }}
     >
       {children}
     </ToastEventContext.Provider>

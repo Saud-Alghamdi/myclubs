@@ -2,12 +2,14 @@ import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
+import { useToastEvent } from "../../hooks/useToastEvent";
 
 export default function LoginForm() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
   const authContext = useAuth();
+  const { setIsLoginSuccessful } = useToastEvent();
   const navigate = useNavigate();
 
   const { loginWithEmailAndPassword, loginWithGoogle, error, setError } =
@@ -22,6 +24,7 @@ export default function LoginForm() {
         passwordRef.current.value,
       );
       if (isLoginSuccess) {
+        setIsLoginSuccessful(true);
         navigate("/");
       }
     }

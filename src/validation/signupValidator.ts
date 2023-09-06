@@ -1,5 +1,5 @@
 /*
- * Sign up validation is handled by firebase, so this file overwrite the firebase error texts to provide more user-friendly error messages
+ * Sign up validation is handled by firebase, so this file overwrites the firebase error texts to provide more user-friendly error messages
  */
 import validation from "../locales/en/validation.json";
 import { getTextFromParentheses } from "../helpers/helpers";
@@ -7,8 +7,6 @@ import { getTextFromParentheses } from "../helpers/helpers";
 export const overwriteFirebaseErrorMessage = (firebaseErrorMessage: string) => {
   // Use helper function to extract the error type from the Firebase error message
   const errorType = getTextFromParentheses(firebaseErrorMessage);
-
-  console.log(errorType);
 
   let errorMessage = "";
 

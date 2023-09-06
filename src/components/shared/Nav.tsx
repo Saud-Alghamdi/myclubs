@@ -4,14 +4,17 @@ import HamburgerIcon from "../svg/HamburgerIcon";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { motion, AnimatePresence } from "framer-motion";
+import { useToastEvent } from "../../hooks/useToastEvent";
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  const {setIsLogoutSuccessful} = useToastEvent()
   const { currentUser, logout } = useAuth();
 
   const handleLogout = async () => {
     await logout();
+    setIsLogoutSuccessful(true);
   };
 
   return (
