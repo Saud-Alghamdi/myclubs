@@ -1,10 +1,20 @@
 import { ToastProps } from "../../types/customTypes";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CloseSymbol from "../svg/CloseSymbol";
 
-export default function Toast({ text, isSuccess }: ToastProps) {
+export default function Toast({ message, isSuccessToastType }: ToastProps) {
+  // This state controlls the close "X" button
   const [isVisible, setIsVisible] = useState<boolean>(true);
+
+  // Close Toast automatically after 4 seconds
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setIsVisible(false);
+    }, 400);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   // If toast is not visible, don't render anything
   if (!isVisible) return null;
@@ -16,7 +26,7 @@ export default function Toast({ text, isSuccess }: ToastProps) {
     exit: { opacity: 0, y: -50 },
   };
 
-  const colorScheme = isSuccess
+  const colorScheme = isSuccessToastType
     ? {
         border: "border-green-200",
         bg: "bg-green-100",
@@ -51,7 +61,7 @@ export default function Toast({ text, isSuccess }: ToastProps) {
             role="alert"
           >
             <div className="flex p-4">
-              {text}
+              {message}
               <div className="ml-auto">
                 <button
                   type="button"

@@ -102,6 +102,15 @@ export type imageComponentProps = {
 };
 
 export type ToastProps = {
-  text: string;
-  isSuccess: boolean;
+  message: string;
+  isSuccessToastType: boolean;
+};
+
+export type ToastProviderProps = {
+  children: React.ReactNode;
+};
+
+export type ToastEventContextType = {
+  isSignupSuccessful: boolean;
+  setIsSignupSuccessful: React.Dispatch<React.SetStateAction<boolean>>;
 };
