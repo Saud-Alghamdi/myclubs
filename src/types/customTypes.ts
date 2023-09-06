@@ -100,23 +100,3 @@ export type imageComponentProps = {
   originalTwStyles: string;
   alt: string;
 };
-
-export type ToastProps = {
-  message: string;
-  isSuccessToastType: boolean;
-};
-
-export type ToastProviderProps = {
-  children: React.ReactNode;
-};
-
-export type ToastEventContextType = {
-  isSignupSuccessful: boolean;
-  setIsSignupSuccessful: React.Dispatch<React.SetStateAction<boolean>>;
-
-  isLoginSuccessful: boolean;
-  setIsLoginSuccessful: React.Dispatch<React.SetStateAction<boolean>>;
-
-  isLogoutSuccessful: boolean;
-  setIsLogoutSuccessful: React.Dispatch<React.SetStateAction<boolean>>;
-};
