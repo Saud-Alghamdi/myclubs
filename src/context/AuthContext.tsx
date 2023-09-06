@@ -9,6 +9,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { createContext } from "react";
 import { AuthProviderProps, AuthContextType } from "../types/customTypes";
@@ -70,7 +71,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       );
       if (userCredential.user) {
-        setCurrentUser(userCredential.user);
+        const { user } = userCredential;
+        // Check if displayName is null and update it
+        if (!user.displayName) {
+          await updateProfile(user, {
+            displayName: user.email?.split("@")[0],
+          });
+        }
+        setCurrentUser(user);
         return true;
       }
     } catch (err) {
@@ -154,7 +162,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         firebaseIsCheckingAuth,
       }}
     >
-      {firebaseIsCheckingAuth && <Spinner />}
+      {(firebaseIsCheckingAuth || loading) && <Spinner />}
       {children}
     </AuthContext.Provider>
   );

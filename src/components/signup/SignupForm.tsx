@@ -2,16 +2,17 @@ import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
+import { useToastEvent } from "../../hooks/useToastEvent";
 
 export default function SignupForm() {
+  const { setIsSignupSuccessful } = useToastEvent();
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const authContext = useAuth();
-  const navigate = useNavigate();
-
   const { signupWithEmailAndPassword, error, setError, loginWithGoogle } =
-    authContext;
+    useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ export default function SignupForm() {
         passwordRef.current.value,
       );
       if (isSignupSuccess) {
+        setIsSignupSuccessful(true);
         navigate("/");
       }
     }
