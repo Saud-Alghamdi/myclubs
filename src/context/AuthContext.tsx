@@ -14,7 +14,6 @@ import {
 import { createContext } from "react";
 import { AuthProviderProps, AuthContextType } from "../types/customTypes";
 import Spinner from "../components/svg/Spinner";
-import { overwriteFirebaseErrorMessage } from "../validation/signupValidator";
 
 // ----- Create Context ----- //
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -83,8 +82,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     } catch (err) {
       if (err instanceof Error) {
-        const errorMessage = overwriteFirebaseErrorMessage(err.message);
-        setError(errorMessage);
+        setError(err.message);
       }
       return false;
     } finally {

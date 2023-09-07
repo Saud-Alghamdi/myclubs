@@ -4,14 +4,18 @@ import HamburgerIcon from "../svg/HamburgerIcon";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 export default function Nav() {
+  const { t } = useTranslation("toast");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { currentUser, logout } = useAuth();
 
   const handleLogout = async () => {
     await logout();
+    toast.success(t("logout.success"));
   };
 
   return (

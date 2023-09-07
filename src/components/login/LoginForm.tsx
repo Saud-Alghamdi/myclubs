@@ -2,8 +2,11 @@ import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 export default function LoginForm() {
+  const { t } = useTranslation(["toast", "validation"]);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -22,6 +25,7 @@ export default function LoginForm() {
         passwordRef.current.value,
       );
       if (isLoginSuccess) {
+        toast.success(t("toast:signup.success"));
         navigate("/");
       }
     }

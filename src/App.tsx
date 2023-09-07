@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import { ToastEventProvider } from "./context/ToastEventContext";
 import Nav from "./components/shared/Nav";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
@@ -11,14 +10,23 @@ import MyMatches from "./pages/MyMatches";
 import PrivateRoutes from "./components/shared/PrivateRoutes";
 import NonLoggedInRoutes from "./components/shared/NonLoggedInRoutes";
 import Footer from "./components/shared/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { I18nextProvider } from "react-i18next";
+import i18n from "./i18n/i18nConfig";
 
 const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <ToastEventProvider>
+    <I18nextProvider i18n={i18n}>
+      <QueryClientProvider client={queryClient}>
+        <ToastContainer
+          position="top-center"
+          hideProgressBar={true}
+          theme="colored"
+        />
+        <AuthProvider>
           <Router>
             <Nav />
             <Routes>
@@ -34,8 +42,8 @@ export default function App() {
             </Routes>
             <Footer />
           </Router>
-        </ToastEventProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </I18nextProvider>
   );
 }
