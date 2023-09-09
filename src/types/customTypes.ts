@@ -1,5 +1,7 @@
 import { User } from "firebase/auth";
 
+//---- Auth ----//
+
 export type AuthContextType = {
   currentUser: User | null;
   error: string | null;
@@ -22,6 +24,8 @@ export type AuthProviderProps = {
   children: React.ReactNode;
 };
 
+//---- Clubs & Matches ----//
+
 export type Club = {
   id: number;
   name: string;
@@ -36,24 +40,10 @@ export type ClubsApiResponse = {
   };
 };
 
-export type TailwindProps = {
-  tailwindClasses?: string;
-};
-
 export type ClubsQueryType = {
   isSuccess: boolean;
   msg: string;
   data?: Club[];
-};
-
-export type MatchesQueryType = {
-  isSuccess: boolean;
-  msg: string;
-  data?: FavoriteClubMatch[];
-};
-
-export type svgProps = {
-  twStyles?: string;
 };
 
 export type FavoriteClubsMatchesReturnType = {
@@ -91,6 +81,26 @@ export type FavoriteClubMatchAPIResponse = {
     id: number;
     timestamp: string;
   };
+};
+
+export type MatchesQueryType = {
+  isSuccess: boolean;
+  msg: string;
+  data?: FavoriteClubMatch[];
+};
+
+export type MatchCardProps = {
+  match: FavoriteClubMatch;
+};
+
+//---- Styles & Images ----//
+
+export type TailwindProps = {
+  tailwindClasses?: string;
+};
+
+export type svgProps = {
+  twStyles?: string;
 };
 
 export type imageComponentProps = {
